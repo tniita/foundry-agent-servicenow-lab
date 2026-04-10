@@ -1,0 +1,26 @@
+# Azure AI Search (Foundry IQ バックエンド)
+azure-search-documents==11.7.0b2
+azure-identity==1.21.0
+
+# Azure Blob Storage (インシデントデータ格納)
+azure-storage-blob==12.25.1
+
+# Azure AI Projects (Foundry Agent Service)
+azure-ai-projects>=2.0.0
+
+# Azure OpenAI (Embedding + Chat)
+openai==1.82.0
+
+# HTTP / API
+requests==2.32.3
+python-dotenv==1.1.0
+
+# Streamlit UI
+streamlit==1.45.0
+
+# Testing
+pytest==8.3.5
+
+# Notebooks (optional)
+jupyter==1.1.1
+ipykernel==6.29.5
