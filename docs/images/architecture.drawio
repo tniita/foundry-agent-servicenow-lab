@@ -1,91 +1,230 @@
 <mxfile host="app.diagrams.net" modified="2026-04-13T10:00:00Z" agent="GitHub Copilot" version="24.7.17" type="device">
-  <diagram id="azure-bicep-infra" name="Azure Infrastructure (Bicep)">
-    <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="850">
+  <diagram id="azure-bicep-infra" name="Azure Infrastructure">
+    <mxGraphModel dx="1400" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900">
       <root>
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
-        <mxCell id="title" value="&lt;b&gt;Azure 構成図 — Foundry Agent Service ハンズオンラボ&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;color:#605E5C;&quot;&gt;Bicep テンプレート (infra/main.bicep) によるプロビジョニング構成&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=top;fontSize=16;fontColor=#0078D4;spacingLeft=4;" vertex="1" parent="1">
-          <mxGeometry x="30" y="10" width="600" height="50" as="geometry"/>
+
+        <mxCell id="title" value="&lt;b&gt;Foundry Agent Service × Foundry IQ — ハンズオンラボ Azure 構成図&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;color:#605E5C;&quot;&gt;infra/main.bicep — Hub レス構成 (AI Hub / Key Vault 不要)&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=top;fontSize=16;fontColor=#0078D4;spacingLeft=4;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="20" y="10" width="650" height="50" as="geometry"/>
         </mxCell>
-        <mxCell id="rg" value="&lt;b&gt;Resource Group: rg-fiqlab&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=4;fillColor=#F0F6FF;strokeColor=#0078D4;strokeWidth=2;dashed=1;verticalAlign=top;align=left;spacingLeft=14;spacingTop=8;fontSize=14;fontColor=#0078D4;container=1;collapsible=0;pointerEvents=0;" vertex="1" parent="1">
-          <mxGeometry x="30" y="70" width="1060" height="690" as="geometry"/>
+
+        <mxCell id="rg" value="&lt;b&gt;Resource Group: rg-fiqlab&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=3;fillColor=#F0F6FF;strokeColor=#0078D4;strokeWidth=2;dashed=1;verticalAlign=top;align=left;spacingLeft=14;spacingTop=10;fontSize=13;fontColor=#0078D4;container=1;collapsible=0;pointerEvents=0;" vertex="1" parent="1">
+          <mxGeometry x="20" y="70" width="1360" height="810" as="geometry"/>
         </mxCell>
-        <mxCell id="lbl-east" value="&lt;b&gt;eastus2&lt;/b&gt;" style="rounded=1;html=1;fillColor=#0078D4;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=30;spacingLeft=2;spacingRight=2;" vertex="1" parent="rg">
-          <mxGeometry x="200" y="12" width="70" height="22" as="geometry"/>
+
+        <mxCell id="region-east" value="&lt;b&gt;eastus2&lt;/b&gt;" style="rounded=1;html=1;fillColor=#0078D4;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=30;" vertex="1" parent="rg">
+          <mxGeometry x="30" y="32" width="66" height="22" as="geometry"/>
         </mxCell>
-        <mxCell id="lbl-japan" value="&lt;b&gt;japaneast&lt;/b&gt;" style="rounded=1;html=1;fillColor=#107C10;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=30;spacingLeft=2;spacingRight=2;" vertex="1" parent="rg">
-          <mxGeometry x="660" y="12" width="76" height="22" as="geometry"/>
+
+        <mxCell id="region-japan" value="&lt;b&gt;japaneast&lt;/b&gt;" style="rounded=1;html=1;fillColor=#107C10;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=30;" vertex="1" parent="rg">
+          <mxGeometry x="700" y="32" width="76" height="22" as="geometry"/>
         </mxCell>
-        <mxCell id="ais" value="&lt;b&gt;Azure AI Services (Foundry)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;kind: AIServices | SKU: S0&lt;br&gt;allowProjectManagement: true&lt;br&gt;Managed Identity (SystemAssigned)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#5C2D91;strokeColor=#4B1F74;strokeWidth=2;fontColor=#FFFFFF;fontSize=12;container=1;collapsible=0;pointerEvents=0;verticalAlign=top;spacingTop=8;" vertex="1" parent="rg">
-          <mxGeometry x="40" y="50" width="460" height="400" as="geometry"/>
+
+        <mxCell id="ais-box" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=4;fillColor=#EDE7F6;strokeColor=#5C2D91;strokeWidth=2;container=1;collapsible=0;pointerEvents=0;" vertex="1" parent="rg">
+          <mxGeometry x="30" y="60" width="640" height="400" as="geometry"/>
         </mxCell>
-        <mxCell id="gpt4o" value="&lt;b&gt;gpt-4o&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;GlobalStandard | 30K TPM&lt;br&gt;ver: 2024-11-20&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#7A4FB3;strokeColor=#5C2D91;strokeWidth=1.5;fontColor=#FFFFFF;fontSize=11;" vertex="1" parent="ais">
-          <mxGeometry x="25" y="90" width="195" height="70" as="geometry"/>
+
+        <mxCell id="ais-icon" value="&lt;b&gt;Azure AI Services (Foundry)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;color:#7B1FA2;&quot;&gt;kind: AIServices | SKU: S0&lt;br&gt;allowProjectManagement: true&lt;br&gt;Managed Identity (SystemAssigned)&lt;/font&gt;" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=none;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://raw.githubusercontent.com/microsoft/fluentui-system-icons/main/assets/Brain%20Circuit/SVG/ic_fluent_brain_circuit_24_filled.svg;html=1;fontSize=11;fontColor=#4A148C;imageWidth=48;imageHeight=48;" vertex="1" parent="ais-box">
+          <mxGeometry x="20" y="10" width="48" height="48" as="geometry"/>
         </mxCell>
-        <mxCell id="emb" value="&lt;b&gt;text-embedding-3-large&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;Standard | 120K TPM&lt;br&gt;ver: 1&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#7A4FB3;strokeColor=#5C2D91;strokeWidth=1.5;fontColor=#FFFFFF;fontSize=11;" vertex="1" parent="ais">
-          <mxGeometry x="240" y="90" width="195" height="70" as="geometry"/>
+
+        <mxCell id="num1" value="&lt;b&gt;1&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#0078D4;strokeColor=none;fontColor=#FFFFFF;fontSize=13;fontStyle=1;" vertex="1" parent="ais-box">
+          <mxGeometry x="595" y="5" width="30" height="30" as="geometry"/>
         </mxCell>
-        <mxCell id="deploy-lbl" value="Model Deployments" style="text;html=1;align=center;verticalAlign=middle;fontSize=9;fontColor=#D4BFFA;fontStyle=2;" vertex="1" parent="ais">
-          <mxGeometry x="130" y="70" width="200" height="16" as="geometry"/>
+
+        <mxCell id="gpt4o" value="&lt;b&gt;gpt-4o&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;GlobalStandard&lt;br&gt;30K TPM | ver 2024-11-20&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#7E57C2;strokeColor=#5C2D91;strokeWidth=1.5;fontColor=#FFFFFF;fontSize=11;" vertex="1" parent="ais-box">
+          <mxGeometry x="35" y="110" width="180" height="65" as="geometry"/>
         </mxCell>
-        <mxCell id="proj" value="&lt;b&gt;Foundry Project&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;fiqlab-project&lt;br&gt;Managed Identity (SystemAssigned)&lt;br&gt;API: 2025-04-01-preview&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#E8D5F5;strokeColor=#8661C5;strokeWidth=2;fontColor=#333333;fontSize=12;container=1;collapsible=0;pointerEvents=0;verticalAlign=top;spacingTop=6;" vertex="1" parent="ais">
-          <mxGeometry x="60" y="210" width="340" height="150" as="geometry"/>
+
+        <mxCell id="emb" value="&lt;b&gt;text-embedding-3-large&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;Standard&lt;br&gt;120K TPM | ver 1&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#7E57C2;strokeColor=#5C2D91;strokeWidth=1.5;fontColor=#FFFFFF;fontSize=11;" vertex="1" parent="ais-box">
+          <mxGeometry x="240" y="110" width="195" height="65" as="geometry"/>
         </mxCell>
-        <mxCell id="proj-lbl" value="Hub レス構成 (子リソース)" style="text;html=1;align=center;verticalAlign=middle;fontSize=9;fontColor=#8661C5;fontStyle=2;" vertex="1" parent="ais">
-          <mxGeometry x="110" y="192" width="240" height="16" as="geometry"/>
+
+        <mxCell id="deploy-lbl" value="Model Deployments" style="text;html=1;align=center;verticalAlign=middle;fontSize=9;fontColor=#9575CD;fontStyle=2;" vertex="1" parent="ais-box">
+          <mxGeometry x="130" y="90" width="180" height="16" as="geometry"/>
         </mxCell>
-        <mxCell id="conn" value="&lt;b&gt;aisearch-connection&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;category: CognitiveSearch&lt;br&gt;authType: ApiKey&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFFFFF;strokeColor=#8661C5;strokeWidth=1.5;fontColor=#5C2D91;fontSize=10;dashed=1;" vertex="1" parent="proj">
-          <mxGeometry x="45" y="75" width="250" height="55" as="geometry"/>
+
+        <mxCell id="proj-box" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#F3E5F5;strokeColor=#8E24AA;strokeWidth=2;dashed=1;container=1;collapsible=0;pointerEvents=0;" vertex="1" parent="ais-box">
+          <mxGeometry x="60" y="215" width="500" height="160" as="geometry"/>
         </mxCell>
-        <mxCell id="search" value="&lt;b&gt;Azure AI Search&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;SKU: Basic&lt;br&gt;Semantic Ranker: standard&lt;br&gt;authOptions: aadOrApiKey&lt;br&gt;Managed Identity (SystemAssigned)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#0078D4;strokeColor=#005A9E;strokeWidth=2;fontColor=#FFFFFF;fontSize=12;verticalAlign=top;spacingTop=6;" vertex="1" parent="rg">
-          <mxGeometry x="600" y="80" width="250" height="140" as="geometry"/>
+
+        <mxCell id="num2" value="&lt;b&gt;2&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#0078D4;strokeColor=none;fontColor=#FFFFFF;fontSize=13;fontStyle=1;" vertex="1" parent="proj-box">
+          <mxGeometry x="455" y="5" width="30" height="30" as="geometry"/>
         </mxCell>
-        <mxCell id="storage" value="&lt;b&gt;Storage Account&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;Standard_LRS | StorageV2&lt;br&gt;TLS 1.2 | HTTPS Only&lt;br&gt;allowBlobPublicAccess: false&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#2B88D8;strokeColor=#005A9E;strokeWidth=2;fontColor=#FFFFFF;fontSize=12;container=1;collapsible=0;pointerEvents=0;verticalAlign=top;spacingTop=6;" vertex="1" parent="rg">
-          <mxGeometry x="600" y="310" width="250" height="200" as="geometry"/>
+
+        <mxCell id="proj-icon" value="&lt;b&gt;Foundry Project&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;color:#6A1B9A;&quot;&gt;fiqlab-project&lt;br&gt;Hub レス子リソース&lt;br&gt;Managed Identity (SystemAssigned)&lt;br&gt;API: 2025-04-01-preview&lt;/font&gt;" style="shape=mxgraph.azure.service_bus;html=1;verticalLabelPosition=bottom;labelBackgroundColor=none;verticalAlign=top;aspect=fixed;fontSize=11;fontColor=#4A148C;imageWidth=40;imageHeight=40;" vertex="1" parent="proj-box">
+          <mxGeometry x="20" y="15" width="50" height="50" as="geometry"/>
         </mxCell>
-        <mxCell id="blob" value="&lt;b&gt;incidents&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;Blob Container&lt;br&gt;publicAccess: None&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#3AA0F7;strokeColor=#2B88D8;strokeWidth=1.5;fontColor=#FFFFFF;fontSize=11;" vertex="1" parent="storage">
-          <mxGeometry x="50" y="100" width="150" height="70" as="geometry"/>
+
+        <mxCell id="conn" value="&lt;b&gt;aisearch-connection&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;category: CognitiveSearch&lt;br&gt;authType: ApiKey&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFFFFF;strokeColor=#8E24AA;strokeWidth=1.5;fontColor=#4A148C;fontSize=10;dashed=1;" vertex="1" parent="proj-box">
+          <mxGeometry x="220" y="55" width="240" height="55" as="geometry"/>
         </mxCell>
-        <mxCell id="rbac-title" value="&lt;b&gt;RBAC ロール割り当て&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#C19C00;fontStyle=1;" vertex="1" parent="rg">
-          <mxGeometry x="40" y="530" width="200" height="25" as="geometry"/>
+
+        <mxCell id="agent-box" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#E3F2FD;strokeColor=#1565C0;strokeWidth=2;container=1;collapsible=0;pointerEvents=0;" vertex="1" parent="rg">
+          <mxGeometry x="30" y="490" width="640" height="130" as="geometry"/>
         </mxCell>
-        <mxCell id="rbac1" value="&lt;font style=&quot;font-size:10px;&quot;&gt;AI Search → Storage&lt;br&gt;&lt;b&gt;Storage Blob Data Reader&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFF4CE;strokeColor=#C19C00;strokeWidth=1.5;fontColor=#3B2E00;fontSize=10;" vertex="1" parent="rg">
-          <mxGeometry x="40" y="560" width="240" height="50" as="geometry"/>
+
+        <mxCell id="num3" value="&lt;b&gt;3&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E65100;strokeColor=none;fontColor=#FFFFFF;fontSize=13;fontStyle=1;" vertex="1" parent="agent-box">
+          <mxGeometry x="595" y="5" width="30" height="30" as="geometry"/>
         </mxCell>
-        <mxCell id="rbac2" value="&lt;font style=&quot;font-size:10px;&quot;&gt;AI Search → AI Services&lt;br&gt;&lt;b&gt;Cognitive Services OpenAI User&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFF4CE;strokeColor=#C19C00;strokeWidth=1.5;fontColor=#3B2E00;fontSize=10;" vertex="1" parent="rg">
-          <mxGeometry x="300" y="560" width="260" height="50" as="geometry"/>
+
+        <mxCell id="agent-svc" value="&lt;b&gt;Foundry Agent Service&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;system-inquiry-agent&lt;br&gt;Prompt Agent / Responses API&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#1565C0;strokeColor=#0D47A1;strokeWidth=1.5;fontColor=#FFFFFF;fontSize=12;" vertex="1" parent="agent-box">
+          <mxGeometry x="25" y="20" width="220" height="70" as="geometry"/>
         </mxCell>
-        <mxCell id="rbac3" value="&lt;font style=&quot;font-size:10px;&quot;&gt;Project → AI Search&lt;br&gt;&lt;b&gt;Search Index Data Reader&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFF4CE;strokeColor=#C19C00;strokeWidth=1.5;fontColor=#3B2E00;fontSize=10;" vertex="1" parent="rg">
-          <mxGeometry x="40" y="620" width="240" height="50" as="geometry"/>
+
+        <mxCell id="mcp-kb" value="&lt;b&gt;MCPTool&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;knowledge_base_retrieve&lt;br&gt;(KB MCP Server)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#2E7D32;strokeColor=#1B5E20;strokeWidth=1.5;fontColor=#FFFFFF;fontSize=11;" vertex="1" parent="agent-box">
+          <mxGeometry x="280" y="20" width="160" height="70" as="geometry"/>
         </mxCell>
-        <mxCell id="rbac4" value="&lt;font style=&quot;font-size:10px;&quot;&gt;Project → AI Search&lt;br&gt;&lt;b&gt;Search Service Contributor&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFF4CE;strokeColor=#C19C00;strokeWidth=1.5;fontColor=#3B2E00;fontSize=10;" vertex="1" parent="rg">
-          <mxGeometry x="300" y="620" width="260" height="50" as="geometry"/>
+
+        <mxCell id="mcp-gh" value="&lt;b&gt;MCPTool (GitHub)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;Remote MCP Server&lt;br&gt;require_approval: never&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#37474F;strokeColor=#263238;strokeWidth=1.5;fontColor=#FFFFFF;fontSize=11;" vertex="1" parent="agent-box">
+          <mxGeometry x="470" y="20" width="150" height="70" as="geometry"/>
         </mxCell>
-        <mxCell id="e-proj-search" value="接続 (ApiKey)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#8661C5;strokeWidth=2;dashed=1;fontColor=#8661C5;fontSize=10;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.7;entryDx=0;entryDy=0;" edge="1" parent="rg" source="proj" target="search">
+
+        <mxCell id="search-box" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#E3F2FD;strokeColor=#0277BD;strokeWidth=2;container=1;collapsible=0;pointerEvents=0;" vertex="1" parent="rg">
+          <mxGeometry x="730" y="60" width="290" height="200" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="num4" value="&lt;b&gt;4&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E65100;strokeColor=none;fontColor=#FFFFFF;fontSize=13;fontStyle=1;" vertex="1" parent="search-box">
+          <mxGeometry x="245" y="5" width="30" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="search-icon" value="&lt;b&gt;Azure AI Search&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;color:#01579B;&quot;&gt;SKU: Basic | japaneast&lt;br&gt;Semantic Ranker: standard&lt;br&gt;authOptions: aadOrApiKey&lt;br&gt;disableLocalAuth: false&lt;br&gt;Managed Identity (SystemAssigned)&lt;/font&gt;" style="shape=mxgraph.azure.azure_cognitive_search;html=1;verticalLabelPosition=bottom;labelBackgroundColor=none;verticalAlign=top;aspect=fixed;fontSize=12;fontColor=#01579B;" vertex="1" parent="search-box">
+          <mxGeometry x="20" y="15" width="50" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="storage-box" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#E3F2FD;strokeColor=#0277BD;strokeWidth=2;container=1;collapsible=0;pointerEvents=0;" vertex="1" parent="rg">
+          <mxGeometry x="730" y="290" width="290" height="230" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="num5" value="&lt;b&gt;5&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E65100;strokeColor=none;fontColor=#FFFFFF;fontSize=13;fontStyle=1;" vertex="1" parent="storage-box">
+          <mxGeometry x="245" y="5" width="30" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="storage-icon" value="&lt;b&gt;Storage Account&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;color:#01579B;&quot;&gt;Standard_LRS | StorageV2&lt;br&gt;japaneast&lt;br&gt;TLS 1.2 | HTTPS Only&lt;br&gt;allowBlobPublicAccess: false&lt;/font&gt;" style="shape=mxgraph.azure.storage;html=1;verticalLabelPosition=bottom;labelBackgroundColor=none;verticalAlign=top;aspect=fixed;fontSize=12;fontColor=#01579B;" vertex="1" parent="storage-box">
+          <mxGeometry x="20" y="15" width="50" height="42" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="blob" value="&lt;b&gt;incidents&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;Blob Container&lt;br&gt;publicAccess: None&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#42A5F5;strokeColor=#1E88E5;strokeWidth=1.5;fontColor=#FFFFFF;fontSize=11;" vertex="1" parent="storage-box">
+          <mxGeometry x="55" y="140" width="170" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="managed-id-box" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=4;fillColor=#FFF3E0;strokeColor=#E65100;strokeWidth=2;dashed=1;container=1;collapsible=0;pointerEvents=0;" vertex="1" parent="rg">
+          <mxGeometry x="1080" y="60" width="250" height="230" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="mi-title" value="&lt;b&gt;Managed Identities&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=12;fontColor=#E65100;fontStyle=1;" vertex="1" parent="managed-id-box">
+          <mxGeometry x="40" y="5" width="170" height="25" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="mi-ais" value="&lt;font style=&quot;font-size:10px;&quot;&gt;AI Services&lt;br&gt;&lt;b&gt;SystemAssigned&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFFFFF;strokeColor=#E65100;strokeWidth=1;fontColor=#BF360C;fontSize=10;" vertex="1" parent="managed-id-box">
+          <mxGeometry x="20" y="40" width="210" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="mi-proj" value="&lt;font style=&quot;font-size:10px;&quot;&gt;Project&lt;br&gt;&lt;b&gt;SystemAssigned&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFFFFF;strokeColor=#E65100;strokeWidth=1;fontColor=#BF360C;fontSize=10;" vertex="1" parent="managed-id-box">
+          <mxGeometry x="20" y="90" width="210" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="mi-search" value="&lt;font style=&quot;font-size:10px;&quot;&gt;AI Search&lt;br&gt;&lt;b&gt;SystemAssigned&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFFFFF;strokeColor=#E65100;strokeWidth=1;fontColor=#BF360C;fontSize=10;" vertex="1" parent="managed-id-box">
+          <mxGeometry x="20" y="140" width="210" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="rbac-box" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=4;fillColor=#FFF8E1;strokeColor=#F9A825;strokeWidth=2;dashed=1;container=1;collapsible=0;pointerEvents=0;" vertex="1" parent="rg">
+          <mxGeometry x="30" y="650" width="990" height="140" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="num6" value="&lt;b&gt;6&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E65100;strokeColor=none;fontColor=#FFFFFF;fontSize=13;fontStyle=1;" vertex="1" parent="rbac-box">
+          <mxGeometry x="945" y="5" width="30" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="rbac-title" value="&lt;b&gt;RBAC ロール割り当て (4 件)&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#F57F17;fontStyle=1;" vertex="1" parent="rbac-box">
+          <mxGeometry x="20" y="8" width="260" height="25" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="rbac1" value="&lt;font style=&quot;font-size:10px;&quot;&gt;&lt;b&gt;AI Search → Storage&lt;/b&gt;&lt;br&gt;Storage Blob Data Reader&lt;br&gt;&lt;font color=&quot;#888&quot;&gt;KB がインシデントデータを読み取る&lt;/font&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFDE7;strokeColor=#F9A825;strokeWidth=1.5;fontColor=#3E2723;fontSize=10;" vertex="1" parent="rbac-box">
+          <mxGeometry x="20" y="42" width="225" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="rbac2" value="&lt;font style=&quot;font-size:10px;&quot;&gt;&lt;b&gt;AI Search → AI Services&lt;/b&gt;&lt;br&gt;Cognitive Services OpenAI User&lt;br&gt;&lt;font color=&quot;#888&quot;&gt;KB が Embedding/Chat モデルを使用&lt;/font&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFDE7;strokeColor=#F9A825;strokeWidth=1.5;fontColor=#3E2723;fontSize=10;" vertex="1" parent="rbac-box">
+          <mxGeometry x="260" y="42" width="240" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="rbac3" value="&lt;font style=&quot;font-size:10px;&quot;&gt;&lt;b&gt;Project → AI Search&lt;/b&gt;&lt;br&gt;Search Index Data Reader&lt;br&gt;&lt;font color=&quot;#888&quot;&gt;Agent が KB を MCP 経由で読み取る&lt;/font&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFDE7;strokeColor=#F9A825;strokeWidth=1.5;fontColor=#3E2723;fontSize=10;" vertex="1" parent="rbac-box">
+          <mxGeometry x="515" y="42" width="225" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="rbac4" value="&lt;font style=&quot;font-size:10px;&quot;&gt;&lt;b&gt;Project → AI Search&lt;/b&gt;&lt;br&gt;Search Service Contributor&lt;br&gt;&lt;font color=&quot;#888&quot;&gt;Agent が MCP エンドポイントにアクセス&lt;/font&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFDE7;strokeColor=#F9A825;strokeWidth=1.5;fontColor=#3E2723;fontSize=10;" vertex="1" parent="rbac-box">
+          <mxGeometry x="755" y="42" width="220" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ext-gh" value="&lt;b&gt;GitHub&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;api.githubcopilot.com/mcp&lt;br&gt;Remote MCP Server&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#263238;strokeColor=#37474F;strokeWidth=2;fontColor=#FFFFFF;fontSize=12;" vertex="1" parent="rg">
+          <mxGeometry x="1080" y="350" width="250" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ext-user" value="&lt;b&gt;User&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;Streamlit Chat UI&lt;/font&gt;" style="shape=mxgraph.azure.user;html=1;verticalLabelPosition=bottom;labelBackgroundColor=none;verticalAlign=top;aspect=fixed;fontSize=12;fontColor=#0078D4;" vertex="1" parent="rg">
+          <mxGeometry x="1170" y="510" width="47" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ext-internet" value="&lt;b&gt;Internet&lt;/b&gt;" style="shape=mxgraph.azure.cloud;html=1;verticalLabelPosition=bottom;labelBackgroundColor=none;verticalAlign=top;aspect=fixed;fontSize=11;fontColor=#424242;" vertex="1" parent="rg">
+          <mxGeometry x="1160" y="460" width="50" height="33" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e-conn-search" value="接続 (ApiKey)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#8E24AA;strokeWidth=2;dashed=1;fontColor=#8E24AA;fontSize=10;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="rg" source="proj-box" target="search-box">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="540" y="335"/>
-              <mxPoint x="540" y="178"/>
+              <mxPoint x="690" y="355"/>
+              <mxPoint x="690" y="160"/>
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="e-search-storage" value="Blob Data Reader" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#C19C00;strokeWidth=1.5;dashed=1;fontColor=#C19C00;fontSize=9;" edge="1" parent="rg" source="search" target="storage">
+
+        <mxCell id="e-search-storage" value="Blob Data Reader" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#F9A825;strokeWidth=1.5;dashed=1;fontColor=#F57F17;fontSize=9;" edge="1" parent="rg" source="search-box" target="storage-box">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
-        <mxCell id="e-search-ais" value="OpenAI User" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#C19C00;strokeWidth=1.5;dashed=1;fontColor=#C19C00;fontSize=9;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="rg" source="search" target="ais">
+
+        <mxCell id="e-search-ais" value="OpenAI User" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#F9A825;strokeWidth=1.5;dashed=1;fontColor=#F57F17;fontSize=9;exitX=0;exitY=0.3;exitDx=0;exitDy=0;entryX=1;entryY=0.3;entryDx=0;entryDy=0;" edge="1" parent="rg" source="search-box" target="ais-box">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e-agent-ais" value="モデル使用" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#1565C0;strokeWidth=2;fontColor=#1565C0;fontSize=9;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="rg" source="agent-box" target="ais-box">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e-agent-search" value="MCP retrieve" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#2E7D32;strokeWidth=2;fontColor=#2E7D32;fontSize=9;exitX=1;exitY=0.3;exitDx=0;exitDy=0;entryX=0;entryY=0.8;entryDx=0;entryDy=0;" edge="1" parent="rg" source="agent-box" target="search-box">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="725" y="42"/>
-              <mxPoint x="270" y="42"/>
+              <mxPoint x="700" y="529"/>
+              <mxPoint x="700" y="220"/>
             </Array>
           </mxGeometry>
         </mxCell>
+
+        <mxCell id="e-agent-gh" value="Remote MCP" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#37474F;strokeWidth=2;fontColor=#37474F;fontSize=9;exitX=1;exitY=0.7;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="rg" source="agent-box" target="ext-gh">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1050" y="581"/>
+              <mxPoint x="1050" y="390"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e-user-agent" value="Question / Response" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#0078D4;strokeWidth=2;fontColor=#0078D4;fontSize=9;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="rg" source="ext-user" target="agent-box">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1050" y="545"/>
+              <mxPoint x="1050" y="555"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
         <mxCell id="note-bicep" value="&lt;font style=&quot;font-size:10px;&quot;&gt;💡 全リソースは &lt;b&gt;infra/main.bicep&lt;/b&gt; で IaC 管理&lt;br&gt;Hub レス構成: AI Hub / Key Vault は不要&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#605E5C;fillColor=#F5F5F5;rounded=1;arcSize=12;strokeColor=#D2D0CE;spacingLeft=8;spacingRight=8;" vertex="1" parent="rg">
-          <mxGeometry x="620" y="560" width="330" height="45" as="geometry"/>
+          <mxGeometry x="1080" y="460" width="250" height="40" as="geometry"/>
         </mxCell>
-        <mxCell id="note-output" value="&lt;font style=&quot;font-size:9px;&quot;&gt;&lt;b&gt;Bicep Outputs:&lt;/b&gt; searchEndpoint, searchName,&lt;br&gt;aiServicesEndpoint, aiServicesName,&lt;br&gt;storageAccountName, blobContainerName, projectName&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=top;fontSize=9;fontColor=#605E5C;fillColor=#F5F5F5;rounded=1;arcSize=12;strokeColor=#D2D0CE;spacingLeft=8;spacingRight=8;spacingTop=6;" vertex="1" parent="rg">
-          <mxGeometry x="620" y="615" width="330" height="55" as="geometry"/>
+
+        <mxCell id="outputs-box" value="&lt;font style=&quot;font-size:9px;&quot;&gt;&lt;b&gt;Bicep Outputs:&lt;/b&gt;&lt;br&gt;searchEndpoint, searchName,&lt;br&gt;aiServicesEndpoint, aiServicesName,&lt;br&gt;storageAccountName, blobContainerName,&lt;br&gt;projectName&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=top;fontSize=9;fontColor=#605E5C;fillColor=#F5F5F5;rounded=1;arcSize=12;strokeColor=#D2D0CE;spacingLeft=8;spacingRight=8;spacingTop=6;" vertex="1" parent="rg">
+          <mxGeometry x="1080" y="290" width="250" height="50" as="geometry"/>
         </mxCell>
+
       </root>
     </mxGraphModel>
   </diagram>

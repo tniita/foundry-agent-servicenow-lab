@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1400px;
+    height: 900px;
+    background: #ffffff;
+    font-family: 'Segoe UI', 'Yu Gothic', 'Meiryo', sans-serif;
+    color: #1a1a1a;
+    padding: 24px 28px 16px;
+  }
+
+  .title-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 2px; }
+  .title-bar h1 { font-size: 18px; font-weight: 700; color: #0078d4; }
+  .subtitle { font-size: 11px; color: #605e5c; margin-bottom: 16px; padding-left: 48px; }
+
+  .diagram { position: relative; width: 1350px; height: 820px; }
+
+  /* badge numbers */
+  .badge {
+    position: absolute; width: 26px; height: 26px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: #fff; z-index: 10;
+  }
+  .badge.blue { background: #0078d4; }
+  .badge.orange { background: #e65100; }
+
+  /* groups */
+  .grp {
+    position: absolute; border-radius: 8px; z-index: 0;
+  }
+  .grp .gl {
+    position: absolute; top: -9px; left: 16px;
+    font-size: 10px; font-weight: 600; padding: 0 6px;
+    background: #fff; letter-spacing: 0.2px;
+  }
+
+  /* resource cards */
+  .card {
+    position: absolute; border-radius: 6px; padding: 10px 12px; z-index: 3;
+  }
+  .card .card-title { font-size: 12px; font-weight: 700; margin-bottom: 3px; }
+  .card .card-sub { font-size: 9.5px; line-height: 1.35; }
+
+  /* arrows */
+  svg.arrows {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 1; pointer-events: none;
+  }
+  svg.arrows line, svg.arrows path { stroke-width: 1.6; fill: none; }
+  svg.arrows text { font-family: 'Segoe UI','Yu Gothic',sans-serif; font-size: 9px; fill: #605e5c; }
+</style>
+</head>
+<body>
+
+<div class="title-bar">
+  <svg width="32" height="32" viewBox="0 0 96 96"><path d="M53.4 9.5L30.6 58.8h29.5L39 86.5h43.3L61.6 58.8h17.8z" fill="#0078d4"/><path d="M30.6 58.8L53.4 9.5 13 58.8z" fill="#0078d4" opacity=".7"/><path d="M39 86.5l21.1-27.7H30.6z" fill="#0078d4" opacity=".5"/></svg>
+  <h1>Foundry Agent Service × Foundry IQ — ハンズオンラボ Azure 構成図</h1>
+</div>
+<div class="subtitle">infra/main.bicep — Hub レス構成 (AI Hub / Key Vault 不要)</div>
+
+<div class="diagram">
+
+  <!-- ═══ Resource Group ═══ -->
+  <div class="grp" style="left:0;top:0;width:1350px;height:820px;border:2px dashed #0078d4;background:rgba(0,120,212,0.015);">
+    <span class="gl" style="color:#0078d4;">Resource Group: rg-fiqlab</span>
+  </div>
+
+  <!-- Region badges -->
+  <div style="position:absolute;left:20px;top:22px;background:#0078d4;color:#fff;font-size:10px;font-weight:600;padding:2px 10px;border-radius:10px;">eastus2</div>
+  <div style="position:absolute;left:700px;top:22px;background:#107c10;color:#fff;font-size:10px;font-weight:600;padding:2px 10px;border-radius:10px;">japaneast</div>
+
+  <!-- ═══ 1. AI Services (Foundry) ═══ -->
+  <div class="grp" style="left:20px;top:48px;width:630px;height:390px;border:2px solid #5c2d91;background:#ede7f6;">
+    <span class="gl" style="color:#5c2d91;">Azure AI Services (Foundry)</span>
+  </div>
+  <div class="badge blue" style="left:620px;top:42px;">1</div>
+
+  <div class="card" style="left:35px;top:60px;width:280px;background:none;">
+    <div class="card-sub" style="color:#7b1fa2;">kind: AIServices | SKU: S0<br>allowProjectManagement: true<br>Managed Identity (SystemAssigned)</div>
+  </div>
+
+  <!-- Model Deployments -->
+  <div style="position:absolute;left:140px;top:114px;font-size:9px;color:#9575cd;font-style:italic;">Model Deployments</div>
+  <div class="card" style="left:40px;top:128px;width:175px;height:60px;background:#7e57c2;border:1.5px solid #5c2d91;">
+    <div class="card-title" style="color:#fff;">gpt-4o</div>
+    <div class="card-sub" style="color:#e1bee7;">GlobalStandard | 30K TPM<br>ver: 2024-11-20</div>
+  </div>
+  <div class="card" style="left:230px;top:128px;width:190px;height:60px;background:#7e57c2;border:1.5px solid #5c2d91;">
+    <div class="card-title" style="color:#fff;">text-embedding-3-large</div>
+    <div class="card-sub" style="color:#e1bee7;">Standard | 120K TPM<br>ver: 1</div>
+  </div>
+
+  <!-- 2. Foundry Project -->
+  <div class="grp" style="left:70px;top:220px;width:500px;height:195px;border:2px dashed #8e24aa;background:#f3e5f5;">
+    <span class="gl" style="color:#8e24aa;">Foundry Project (Hub レス子リソース)</span>
+  </div>
+  <div class="badge blue" style="left:540px;top:215px;">2</div>
+
+  <div class="card" style="left:85px;top:236px;width:200px;background:none;">
+    <div class="card-title" style="color:#4a148c;">fiqlab-project</div>
+    <div class="card-sub" style="color:#6a1b9a;">Managed Identity (SystemAssigned)<br>API: 2025-04-01-preview</div>
+  </div>
+
+  <div class="card" style="left:310px;top:290px;width:240px;height:50px;background:#fff;border:1.5px dashed #8e24aa;">
+    <div class="card-title" style="color:#4a148c;font-size:11px;">aisearch-connection</div>
+    <div class="card-sub" style="color:#6a1b9a;">category: CognitiveSearch | authType: ApiKey</div>
+  </div>
+
+  <!-- ═══ 3. Agent Service ═══ -->
+  <div class="grp" style="left:20px;top:465px;width:630px;height:120px;border:2px solid #1565c0;background:#e3f2fd;">
+    <span class="gl" style="color:#1565c0;">Foundry Agent Service</span>
+  </div>
+  <div class="badge orange" style="left:620px;top:460px;">3</div>
+
+  <div class="card" style="left:35px;top:480px;width:200px;height:65px;background:#1565c0;border:1.5px solid #0d47a1;">
+    <div class="card-title" style="color:#fff;">Agent Service</div>
+    <div class="card-sub" style="color:#bbdefb;">system-inquiry-agent<br>Prompt Agent / Responses API</div>
+  </div>
+
+  <div class="card" style="left:260px;top:480px;width:155px;height:65px;background:#2e7d32;border:1.5px solid #1b5e20;">
+    <div class="card-title" style="color:#fff;font-size:11px;">MCPTool</div>
+    <div class="card-sub" style="color:#c8e6c9;">knowledge_base_retrieve<br>(KB MCP Server)</div>
+  </div>
+
+  <div class="card" style="left:440px;top:480px;width:150px;height:65px;background:#37474f;border:1.5px solid #263238;">
+    <div class="card-title" style="color:#fff;font-size:11px;">MCPTool (GitHub)</div>
+    <div class="card-sub" style="color:#b0bec5;">Remote MCP Server<br>require_approval: never</div>
+  </div>
+
+  <!-- ═══ 4. AI Search ═══ -->
+  <div class="grp" style="left:700px;top:48px;width:290px;height:195px;border:2px solid #0277bd;background:#e3f2fd;">
+    <span class="gl" style="color:#01579b;">Azure AI Search</span>
+  </div>
+  <div class="badge orange" style="left:960px;top:42px;">4</div>
+
+  <div class="card" style="left:715px;top:65px;width:260px;background:none;">
+    <div class="card-sub" style="color:#01579b;">SKU: Basic | japaneast<br>Semantic Ranker: standard<br>authOptions: aadOrApiKey<br>disableLocalAuth: false<br>Managed Identity (SystemAssigned)</div>
+  </div>
+
+  <!-- ═══ 5. Storage Account ═══ -->
+  <div class="grp" style="left:700px;top:270px;width:290px;height:220px;border:2px solid #0277bd;background:#e3f2fd;">
+    <span class="gl" style="color:#01579b;">Storage Account</span>
+  </div>
+  <div class="badge orange" style="left:960px;top:265px;">5</div>
+
+  <div class="card" style="left:715px;top:288px;width:260px;background:none;">
+    <div class="card-sub" style="color:#01579b;">Standard_LRS | StorageV2 | japaneast<br>TLS 1.2 | HTTPS Only<br>allowBlobPublicAccess: false</div>
+  </div>
+
+  <div class="card" style="left:745px;top:395px;width:170px;height:52px;background:#42a5f5;border:1.5px solid #1e88e5;">
+    <div class="card-title" style="color:#fff;font-size:11px;">incidents</div>
+    <div class="card-sub" style="color:#e3f2fd;">Blob Container<br>publicAccess: None</div>
+  </div>
+
+  <!-- ═══ Managed Identities ═══ -->
+  <div class="grp" style="left:1050px;top:48px;width:285px;height:195px;border:2px dashed #e65100;background:#fff3e0;">
+    <span class="gl" style="color:#e65100;">Managed Identities</span>
+  </div>
+
+  <div class="card" style="left:1065px;top:70px;width:255px;height:35px;background:#fff;border:1px solid #e65100;">
+    <div class="card-sub" style="color:#bf360c;text-align:center;">AI Services — <b>SystemAssigned</b></div>
+  </div>
+  <div class="card" style="left:1065px;top:112px;width:255px;height:35px;background:#fff;border:1px solid #e65100;">
+    <div class="card-sub" style="color:#bf360c;text-align:center;">Project — <b>SystemAssigned</b></div>
+  </div>
+  <div class="card" style="left:1065px;top:154px;width:255px;height:35px;background:#fff;border:1px solid #e65100;">
+    <div class="card-sub" style="color:#bf360c;text-align:center;">AI Search — <b>SystemAssigned</b></div>
+  </div>
+
+  <!-- ═══ 6. RBAC ═══ -->
+  <div class="grp" style="left:20px;top:610px;width:965px;height:135px;border:2px dashed #f9a825;background:#fff8e1;">
+    <span class="gl" style="color:#f57f17;">RBAC ロール割り当て (4 件)</span>
+  </div>
+  <div class="badge orange" style="left:955px;top:605px;">6</div>
+
+  <div class="card" style="left:30px;top:630px;width:220px;height:70px;background:#fffde7;border:1.5px solid #f9a825;">
+    <div class="card-title" style="color:#3e2723;font-size:10px;">AI Search → Storage</div>
+    <div class="card-sub" style="color:#3e2723;"><b>Storage Blob Data Reader</b><br><span style="color:#888;">KB がインシデントデータを読み取る</span></div>
+  </div>
+  <div class="card" style="left:260px;top:630px;width:230px;height:70px;background:#fffde7;border:1.5px solid #f9a825;">
+    <div class="card-title" style="color:#3e2723;font-size:10px;">AI Search → AI Services</div>
+    <div class="card-sub" style="color:#3e2723;"><b>Cognitive Services OpenAI User</b><br><span style="color:#888;">KB が Embedding/Chat モデルを使用</span></div>
+  </div>
+  <div class="card" style="left:500px;top:630px;width:230px;height:70px;background:#fffde7;border:1.5px solid #f9a825;">
+    <div class="card-title" style="color:#3e2723;font-size:10px;">Project → AI Search</div>
+    <div class="card-sub" style="color:#3e2723;"><b>Search Index Data Reader</b><br><span style="color:#888;">Agent が KB を MCP 経由で読み取る</span></div>
+  </div>
+  <div class="card" style="left:740px;top:630px;width:230px;height:70px;background:#fffde7;border:1.5px solid #f9a825;">
+    <div class="card-title" style="color:#3e2723;font-size:10px;">Project → AI Search</div>
+    <div class="card-sub" style="color:#3e2723;"><b>Search Service Contributor</b><br><span style="color:#888;">Agent が MCP エンドポイントにアクセス</span></div>
+  </div>
+
+  <!-- ═══ External: GitHub ═══ -->
+  <div class="card" style="left:1050px;top:310px;width:285px;height:70px;background:#263238;border:2px solid #37474f;">
+    <div class="card-title" style="color:#fff;">GitHub</div>
+    <div class="card-sub" style="color:#b0bec5;">api.githubcopilot.com/mcp<br>Remote MCP Server</div>
+  </div>
+
+  <!-- User -->
+  <div style="position:absolute;left:1150px;top:470px;text-align:center;z-index:3;">
+    <svg width="42" height="42" viewBox="0 0 52 52"><circle cx="26" cy="17" r="10" fill="#0078d4"/><path d="M6 48c0-12 9-18 20-18s20 6 20 18" fill="#0078d4" opacity=".55"/></svg>
+    <div style="font-size:12px;font-weight:700;color:#0078d4;">User</div>
+    <div style="font-size:9px;color:#605e5c;">Streamlit Chat UI</div>
+  </div>
+
+  <!-- Bicep note -->
+  <div style="position:absolute;left:1050px;top:405px;width:285px;background:#f5f5f5;border:1px solid #d2d0ce;border-radius:6px;padding:6px 10px;font-size:9.5px;color:#605e5c;z-index:3;">
+    💡 全リソースは <b>infra/main.bicep</b> で IaC 管理<br>Hub レス構成: AI Hub / Key Vault は不要
+  </div>
+
+  <!-- Bicep outputs -->
+  <div style="position:absolute;left:1050px;top:260px;width:285px;background:#f5f5f5;border:1px solid #d2d0ce;border-radius:6px;padding:6px 10px;font-size:8.5px;color:#605e5c;z-index:3;">
+    <b>Bicep Outputs:</b><br>searchEndpoint, searchName, aiServicesEndpoint, aiServicesName, storageAccountName, blobContainerName, projectName
+  </div>
+
+  <!-- ═══ ARROWS ═══ -->
+  <svg class="arrows" viewBox="0 0 1350 820">
+    <defs>
+      <marker id="a-p" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#8e24aa"/></marker>
+      <marker id="a-y" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#f9a825"/></marker>
+      <marker id="a-b" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#1565c0"/></marker>
+      <marker id="a-g" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#2e7d32"/></marker>
+      <marker id="a-d" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#37474f"/></marker>
+      <marker id="a-u" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#0078d4"/></marker>
+    </defs>
+
+    <!-- Project connection → AI Search -->
+    <path d="M570 315 Q680 315 680 200 Q680 145 700 145" stroke="#8e24aa" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#a-p)"/>
+    <text x="610" y="280" fill="#8e24aa" font-size="9" font-weight="600">接続 (ApiKey)</text>
+
+    <!-- AI Search → Storage (Blob Data Reader) -->
+    <line x1="845" y1="243" x2="845" y2="270" stroke="#f9a825" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#a-y)"/>
+    <text x="855" y="258" fill="#f57f17" font-size="8">Blob Data Reader</text>
+
+    <!-- AI Search → AI Services (OpenAI User) -->
+    <line x1="700" y1="105" x2="650" y2="105" stroke="#f9a825" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#a-y)"/>
+    <text x="656" y="98" fill="#f57f17" font-size="8">OpenAI User</text>
+
+    <!-- Agent → AI Services (Model) -->
+    <line x1="335" y1="465" x2="335" y2="438" stroke="#1565c0" stroke-width="2" marker-end="url(#a-b)"/>
+    <text x="342" y="456" fill="#1565c0" font-size="8">モデル使用</text>
+
+    <!-- Agent (KB MCPTool) → AI Search -->
+    <path d="M415 480 Q670 478 670 210 Q670 150 698 150" stroke="#2e7d32" stroke-width="2" marker-end="url(#a-g)"/>
+    <text x="640" y="420" fill="#2e7d32" font-size="9" font-weight="600">MCP retrieve</text>
+
+    <!-- Agent (GitHub MCPTool) → GitHub -->
+    <path d="M590 510 Q1020 510 1020 350 L1048 350" stroke="#37474f" stroke-width="2" marker-end="url(#a-d)"/>
+    <text x="930" y="470" fill="#37474f" font-size="9" font-weight="600">Remote MCP</text>
+
+    <!-- User → Agent -->
+    <path d="M1148 500 Q1020 500 1020 525 L652 525" stroke="#0078d4" stroke-width="2" marker-end="url(#a-u)"/>
+    <text x="870" y="517" fill="#0078d4" font-size="9" font-weight="600">Question / Response</text>
+  </svg>
+
+  <!-- ═══ FOOTER LEGEND ═══ -->
+  <div style="position:absolute;left:20px;top:755px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:4px;">
+      <div style="width:14px;height:14px;background:#5c2d91;border-radius:3px;"></div>
+      <span style="font-size:9.5px;color:#5c2d91;font-weight:600;">AI Services (Foundry)</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:4px;">
+      <div style="width:14px;height:14px;background:#8e24aa;border-radius:3px;border:1.5px dashed #8e24aa;"></div>
+      <span style="font-size:9.5px;color:#8e24aa;font-weight:600;">Foundry Project</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:4px;">
+      <div style="width:14px;height:14px;background:#0277bd;border-radius:3px;"></div>
+      <span style="font-size:9.5px;color:#0277bd;font-weight:600;">AI Search / Storage</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:4px;">
+      <div style="width:14px;height:14px;background:#e65100;border-radius:3px;border-radius:50%;"></div>
+      <span style="font-size:9.5px;color:#e65100;font-weight:600;">Managed Identity</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:4px;">
+      <div style="width:14px;height:14px;background:#f9a825;border-radius:3px;"></div>
+      <span style="font-size:9.5px;color:#f57f17;font-weight:600;">RBAC</span>
+    </div>
+    <span style="font-size:9px;color:#a19f9d;margin-left:12px;">All resources auto-provisioned via Bicep template (Hub レス構成)</span>
+  </div>
+
+</div>
+</body>
+</html>
