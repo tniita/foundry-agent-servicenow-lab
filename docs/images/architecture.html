@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1400px;
+    height: 940px;
+    background: #ffffff;
+    font-family: 'Segoe UI', 'Yu Gothic', 'Meiryo', sans-serif;
+    color: #1a1a1a;
+    padding: 32px 40px 24px;
+  }
+  .title-bar { display: flex; align-items: center; gap: 14px; margin-bottom: 4px; }
+  .title-bar h1 { font-size: 21px; font-weight: 700; color: #0078d4; }
+  .subtitle { font-size: 12.5px; color: #605e5c; margin-bottom: 24px; padding-left: 50px; }
+
+  .diagram { position: relative; width: 1320px; height: 830px; }
+
+  /* ── Node ── */
+  .node {
+    position: absolute; display: flex; flex-direction: column;
+    align-items: center; text-align: center; z-index: 3;
+  }
+  .node .ico { width: 52px; height: 52px; margin-bottom: 5px; }
+  .node .lbl { font-size: 11.5px; font-weight: 600; color: #242424; line-height: 1.25; }
+  .node .sub { font-size: 9.5px; color: #605e5c; line-height: 1.25; margin-top: 1px; }
+
+  /* ── Group ── */
+  .grp {
+    position: absolute; border-radius: 10px; z-index: 0;
+  }
+  .grp .gl {
+    position: absolute; top: -10px; left: 18px;
+    font-size: 10.5px; font-weight: 600; padding: 0 8px;
+    background: #fff; letter-spacing: 0.3px;
+  }
+  .grp.azure   { border: 2px solid #0078d4; background: rgba(0,120,212,0.025); }
+  .grp.azure .gl { color: #0078d4; }
+  .grp.kb      { border: 1.5px solid #107c10; background: rgba(16,124,16,0.025); }
+  .grp.kb .gl  { color: #107c10; }
+  .grp.gh      { border: 1.5px solid #57606a; background: rgba(36,41,47,0.02); }
+  .grp.gh .gl  { color: #24292f; }
+  .grp.infra   { border: 1.5px dashed #8661c5; background: rgba(134,97,197,0.02); }
+  .grp.infra .gl { color: #8661c5; }
+
+  /* ── Arrows ── */
+  svg.arrows {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 1; pointer-events: none;
+  }
+  svg.arrows line, svg.arrows path { stroke-width: 1.6; fill: none; }
+  svg.arrows text { font-family: 'Segoe UI','Yu Gothic',sans-serif; font-size: 10px; fill: #605e5c; }
+  .ab { stroke: #0078d4; }
+  .ag { stroke: #107c10; }
+  .ad { stroke: #57606a; }
+  .ap { stroke: #8661c5; }
+  .ar { stroke: #e3008c; }
+  .ay { stroke: #a19f9d; }
+</style>
+</head>
+<body>
+
+<div class="title-bar">
+  <svg width="36" height="36" viewBox="0 0 96 96"><path d="M53.4 9.5L30.6 58.8h29.5L39 86.5h43.3L61.6 58.8h17.8z" fill="#0078d4"/><path d="M30.6 58.8L53.4 9.5 13 58.8z" fill="#0078d4" opacity=".7"/><path d="M39 86.5l21.1-27.7H30.6z" fill="#0078d4" opacity=".5"/></svg>
+  <h1>Foundry Agent Service x Foundry IQ  Workshop Architecture</h1>
+</div>
+<div class="subtitle">RAG + GitHub Code Search によるシステム問い合わせチャットボット</div>
+
+<div class="diagram">
+
+  <!-- ══════════ GROUPS ══════════ -->
+  <div class="grp azure" style="left:310px; top:80px; width:700px; height:210px;">
+    <span class="gl">Azure AI Foundry</span>
+  </div>
+  <div class="grp kb" style="left:30px; top:330px; width:560px; height:370px;">
+    <span class="gl">Foundry IQ -- Knowledge Retrieval Pipeline</span>
+  </div>
+  <div class="grp gh" style="left:640px; top:330px; width:370px; height:340px;">
+    <span class="gl">GitHub -- Code / Design Doc Search</span>
+  </div>
+  <div class="grp infra" style="left:30px; top:730px; width:980px; height:85px;">
+    <span class="gl">Azure Infrastructure (Bicep IaC)</span>
+  </div>
+
+  <!-- ══════════ ROW 0: USER ══════════ -->
+  <div class="node" style="left:590px; top:0px;">
+    <svg class="ico" viewBox="0 0 52 52"><circle cx="26" cy="17" r="10" fill="#0078d4"/><path d="M6 48c0-12 9-18 20-18s20 6 20 18" fill="#0078d4" opacity=".55"/></svg>
+    <div class="lbl">User</div>
+    <div class="sub">Streamlit Chat UI</div>
+  </div>
+
+  <!-- ══════════ ROW 1: FOUNDRY (inside azure group) ══════════ -->
+  <!-- AI Hub -->
+  <div class="node" style="left:345px; top:98px;">
+    <svg class="ico" viewBox="0 0 52 52"><rect x="4" y="4" width="44" height="44" rx="8" fill="#5c2d91"/><circle cx="26" cy="21" r="7" fill="#fff"/><circle cx="15" cy="35" r="4.5" fill="#fff" opacity=".7"/><circle cx="37" cy="35" r="4.5" fill="#fff" opacity=".7"/><line x1="26" y1="28" x2="15" y2="31" stroke="#fff" stroke-width="1.6"/><line x1="26" y1="28" x2="37" y2="31" stroke="#fff" stroke-width="1.6"/></svg>
+    <div class="lbl">AI Hub</div>
+    <div class="sub">Governance</div>
+  </div>
+
+  <!-- AI Project -->
+  <div class="node" style="left:470px; top:98px;">
+    <svg class="ico" viewBox="0 0 52 52"><rect x="4" y="4" width="44" height="44" rx="8" fill="#5c2d91" opacity=".82"/><rect x="12" y="14" width="28" height="5" rx="2" fill="#fff"/><rect x="12" y="23" width="21" height="5" rx="2" fill="#fff" opacity=".8"/><rect x="12" y="32" width="24" height="5" rx="2" fill="#fff" opacity=".6"/></svg>
+    <div class="lbl">AI Project</div>
+    <div class="sub">Agent Runtime</div>
+  </div>
+
+  <!-- Agent Service -->
+  <div class="node" style="left:610px; top:98px;">
+    <svg class="ico" viewBox="0 0 52 52"><rect x="3" y="7" width="46" height="36" rx="6" fill="#0078d4"/><circle cx="19" cy="23" r="6" fill="#fff"/><rect x="28" y="18" width="14" height="2.5" rx="1" fill="#fff"/><rect x="28" y="24" width="10" height="2.5" rx="1" fill="#fff"/><path d="M14 35h24" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>
+    <div class="lbl">Foundry Agent Service</div>
+    <div class="sub">Prompt Agent / Responses API</div>
+  </div>
+
+  <!-- Key Vault -->
+  <div class="node" style="left:870px; top:98px;">
+    <svg class="ico" viewBox="0 0 52 52"><rect x="6" y="6" width="40" height="40" rx="6" fill="#5c2d91"/><circle cx="26" cy="21" r="7" stroke="#fff" stroke-width="2.2" fill="none"/><rect x="23.5" y="28" width="5" height="12" rx="2.5" fill="#fff"/></svg>
+    <div class="lbl">Key Vault</div>
+    <div class="sub">Secrets</div>
+  </div>
+
+  <!-- MCPTool -->
+  <div class="node" style="left:460px; top:200px;">
+    <svg class="ico" viewBox="0 0 52 52"><rect x="6" y="6" width="40" height="40" rx="6" fill="#107c10"/><path d="M18 26h16M26 18v16" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/></svg>
+    <div class="lbl">MCPTool</div>
+    <div class="sub">knowledge_base_retrieve</div>
+  </div>
+
+  <!-- Function Tools -->
+  <div class="node" style="left:760px; top:200px;">
+    <svg class="ico" viewBox="0 0 52 52"><rect x="6" y="6" width="40" height="40" rx="6" fill="#24292f"/><text x="26" y="33" text-anchor="middle" fill="#fff" font-size="20" font-weight="bold">{ }</text></svg>
+    <div class="lbl">Function Tools</div>
+    <div class="sub">Client-side Execution</div>
+  </div>
+
+  <!-- ══════════ ROW 2: KB / GITHUB ══════════ -->
+
+  <!-- Foundry IQ KB -->
+  <div class="node" style="left:70px; top:360px;">
+    <svg class="ico" viewBox="0 0 52 52"><rect x="4" y="2" width="44" height="48" rx="6" fill="#107c10"/><rect x="11" y="10" width="28" height="4" rx="1.5" fill="#fff"/><rect x="11" y="18" width="22" height="4" rx="1.5" fill="#fff" opacity=".8"/><rect x="11" y="26" width="18" height="4" rx="1.5" fill="#fff" opacity=".6"/><circle cx="40" cy="40" r="9" fill="#005a30"/><path d="M37 40h6M40 37v6" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <div class="lbl">Foundry IQ</div>
+    <div class="sub">Knowledge Base<br/>Agentic Search</div>
+  </div>
+
+  <!-- Blob Knowledge Source -->
+  <div class="node" style="left:290px; top:360px;">
+    <svg class="ico" viewBox="0 0 52 52"><rect x="4" y="4" width="44" height="44" rx="6" fill="#0078d4"/><rect x="11" y="11" width="30" height="7" rx="2.5" fill="#fff"/><rect x="11" y="22" width="30" height="7" rx="2.5" fill="#fff" opacity=".7"/><rect x="11" y="33" width="20" height="7" rx="2.5" fill="#fff" opacity=".5"/></svg>
+    <div class="lbl">Blob Knowledge Source</div>
+    <div class="sub">Auto Index Generation</div>
+  </div>
+
+  <!-- Azure AI Search -->
+  <div class="node" style="left:70px; top:520px;">
+    <svg class="ico" viewBox="0 0 52 52"><rect x="4" y="4" width="44" height="44" rx="6" fill="#0078d4"/><circle cx="23" cy="23" r="9" stroke="#fff" stroke-width="3" fill="none"/><line x1="30" y1="30" x2="40" y2="40" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>
+    <div class="lbl">Azure AI Search</div>
+    <div class="sub">Semantic Ranker</div>
+  </div>
+
+  <!-- AI Services -->
+  <div class="node" style="left:255px; top:520px;">
+    <svg class="ico" viewBox="0 0 52 52"><rect x="4" y="4" width="44" height="44" rx="6" fill="#e3008c"/><circle cx="26" cy="19" r="7" fill="#fff"/><circle cx="15" cy="35" r="5" fill="#fff" opacity=".7"/><circle cx="37" cy="35" r="5" fill="#fff" opacity=".7"/><line x1="26" y1="26" x2="15" y2="30" stroke="#fff" stroke-width="1.6"/><line x1="26" y1="26" x2="37" y2="30" stroke="#fff" stroke-width="1.6"/></svg>
+    <div class="lbl">Azure AI Services</div>
+    <div class="sub">gpt-4o / text-embedding-3-large</div>
+  </div>
+
+  <!-- Blob Storage -->
+  <div class="node" style="left:440px; top:530px;">
+    <svg class="ico" viewBox="0 0 52 52"><ellipse cx="26" cy="13" rx="18" ry="7" fill="#3aa0f7"/><rect x="8" y="13" width="36" height="26" fill="#0078d4"/><ellipse cx="26" cy="39" rx="18" ry="7" fill="#005a9e"/><ellipse cx="26" cy="13" rx="18" ry="7" fill="#3aa0f7"/></svg>
+    <div class="lbl">Blob Storage</div>
+    <div class="sub">incidents container</div>
+  </div>
+
+  <!-- Mock CSV -->
+  <div class="node" style="left:443px; top:630px;">
+    <svg class="ico" viewBox="0 0 52 52"><path d="M12 2h20l12 12v34H12z" fill="#d83b01"/><path d="M32 2v12h12" fill="#a52a00"/><rect x="16" y="22" width="18" height="2.5" rx="1" fill="#fff"/><rect x="16" y="28" width="13" height="2.5" rx="1" fill="#fff" opacity=".8"/><rect x="16" y="34" width="16" height="2.5" rx="1" fill="#fff" opacity=".6"/></svg>
+    <div class="lbl">mock_incidents.csv</div>
+    <div class="sub">ServiceNow Mock (25 records)</div>
+  </div>
+
+  <!-- GitHub Repository -->
+  <div class="node" style="left:770px; top:360px;">
+    <svg class="ico" viewBox="0 0 52 52"><circle cx="26" cy="26" r="22" fill="#24292f"/><path d="M26 8C16.1 8 8 16.1 8 26c0 7.7 5 14.3 11.9 16.6.9.2 1.2-.4 1.2-.8v-3c-4.8 1-5.9-2.3-5.9-2.3-.8-2-1.9-2.5-1.9-2.5-1.6-1.1.1-1.1.1-1.1 1.7.1 2.6 1.8 2.6 1.8 1.5 2.6 4 1.9 5 1.4.2-1.1.6-1.9 1.1-2.3-3.9-.4-7.9-1.9-7.9-8.7 0-1.9.7-3.5 1.8-4.7-.2-.5-.8-2.3.2-4.7 0 0 1.4-.5 4.7 1.8a16 16 0 018.6 0c3.3-2.3 4.7-1.8 4.7-1.8 1 2.4.4 4.2.2 4.7 1.1 1.2 1.8 2.8 1.8 4.7 0 6.8-4.1 8.3-8 8.7.6.5 1.2 1.6 1.2 3.3v4.8c0 .5.3 1 1.2.8C39 40.3 44 33.7 44 26c0-9.9-8.1-18-18-18z" fill="#fff"/></svg>
+    <div class="lbl">GitHub Repository</div>
+    <div class="sub">BizPortal Sample System</div>
+  </div>
+
+  <!-- Code Search -->
+  <div class="node" style="left:690px; top:510px;">
+    <svg class="ico" viewBox="0 0 52 52"><rect x="4" y="4" width="44" height="44" rx="6" fill="#57606a"/><text x="26" y="24" text-anchor="middle" fill="#fff" font-size="10" font-weight="600">search</text><text x="26" y="36" text-anchor="middle" fill="#fff" font-size="9" opacity=".85">_code()</text></svg>
+    <div class="lbl">Code Search API</div>
+  </div>
+
+  <!-- Contents API -->
+  <div class="node" style="left:855px; top:510px;">
+    <svg class="ico" viewBox="0 0 52 52"><rect x="4" y="4" width="44" height="44" rx="6" fill="#57606a"/><text x="26" y="24" text-anchor="middle" fill="#fff" font-size="10" font-weight="600">get_file</text><text x="26" y="36" text-anchor="middle" fill="#fff" font-size="9" opacity=".85">_content()</text></svg>
+    <div class="lbl">Contents API</div>
+  </div>
+
+  <!-- Design Docs -->
+  <div class="node" style="left:688px; top:598px;">
+    <svg class="ico" viewBox="0 0 52 52"><path d="M10 2h22l12 12v34H10z" fill="#4f6bed"/><path d="M32 2v12h12" fill="#3b52b5"/><rect x="15" y="22" width="18" height="2.5" rx="1" fill="#fff"/><rect x="15" y="28" width="14" height="2.5" rx="1" fill="#fff" opacity=".7"/><rect x="15" y="34" width="16" height="2.5" rx="1" fill="#fff" opacity=".5"/></svg>
+    <div class="lbl">Design Docs (5)</div>
+    <div class="sub">API / DB / Infra / Security</div>
+  </div>
+
+  <!-- Source Code -->
+  <div class="node" style="left:853px; top:598px;">
+    <svg class="ico" viewBox="0 0 52 52"><rect x="4" y="4" width="44" height="44" rx="6" fill="#ffc107"/><text x="26" y="33" text-anchor="middle" fill="#24292f" font-size="15" font-weight="bold">.py</text></svg>
+    <div class="lbl">Source Code (14)</div>
+    <div class="sub">FastAPI / 4 Modules</div>
+  </div>
+
+  <!-- ══════════ ARROWS ══════════ -->
+  <svg class="arrows" viewBox="0 0 1320 830">
+    <defs>
+      <marker id="a-b" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7" fill="#0078d4"/></marker>
+      <marker id="a-g" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7" fill="#107c10"/></marker>
+      <marker id="a-d" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7" fill="#57606a"/></marker>
+      <marker id="a-r" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7" fill="#e3008c"/></marker>
+      <marker id="a-y" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7" fill="#a19f9d"/></marker>
+      <marker id="a-b2" markerWidth="9" markerHeight="7" refX="0" refY="3.5" orient="auto"><path d="M9,0 L0,3.5 L9,7" fill="#0078d4"/></marker>
+    </defs>
+
+    <!-- User -> Agent Service (bidirectional) -->
+    <path d="M616 68 Q616 82 640 100" class="ab" marker-end="url(#a-b)"/>
+    <path d="M636 97 Q612 80 612 66" class="ab" stroke-dasharray="5,3" marker-end="url(#a-b2)"/>
+    <text x="645" y="82" fill="#0078d4" font-size="9.5">Query / Response</text>
+
+    <!-- Agent -> MCPTool -->
+    <line x1="620" y1="165" x2="520" y2="210" class="ag" marker-end="url(#a-g)"/>
+
+    <!-- Agent -> Function Tools -->
+    <line x1="670" y1="165" x2="790" y2="210" class="ad" marker-end="url(#a-d)"/>
+
+    <!-- MCPTool -> Foundry IQ KB -->
+    <path d="M480 268 C380 305 200 330 125 365" class="ag" marker-end="url(#a-g)"/>
+    <text x="270" y="305" fill="#107c10" font-weight="600">retrieve</text>
+
+    <!-- KB -> Blob KS -->
+    <line x1="155" y1="418" x2="300" y2="380" class="ag" stroke-dasharray="5,3" marker-end="url(#a-g)"/>
+
+    <!-- Blob KS -> AI Search -->
+    <path d="M300 425 C250 460 170 490 128 528" class="ab" marker-end="url(#a-b)"/>
+    <text x="185" y="472" fill="#0078d4">Index</text>
+
+    <!-- Blob KS -> AI Services -->
+    <line x1="320" y1="425" x2="300" y2="525" class="ar" marker-end="url(#a-r)"/>
+    <text x="322" y="478" fill="#e3008c">Embedding</text>
+
+    <!-- Blob KS -> Blob Storage -->
+    <line x1="360" y1="425" x2="468" y2="535" class="ab" marker-end="url(#a-b)"/>
+    <text x="408" y="475" fill="#0078d4">Data</text>
+
+    <!-- CSV -> Blob Storage -->
+    <line x1="470" y1="633" x2="470" y2="600" class="ay" marker-end="url(#a-y)"/>
+    <text x="482" y="620" font-size="9">upload</text>
+
+    <!-- AI Search <-> AI Services (role) -->
+    <line x1="160" y1="555" x2="265" y2="555" stroke-dasharray="4,3" class="ay" marker-end="url(#a-y)"/>
+    <text x="175" y="570" font-size="8.5" fill="#605e5c">OpenAI User Role</text>
+
+    <!-- Function Tools -> GitHub Repo -->
+    <line x1="800" y1="268" x2="800" y2="365" class="ad" marker-end="url(#a-d)"/>
+    <text x="808" y="322" fill="#57606a">API call</text>
+
+    <!-- GitHub -> Code Search -->
+    <line x1="780" y1="425" x2="728" y2="515" class="ad" marker-end="url(#a-d)"/>
+
+    <!-- GitHub -> Contents -->
+    <line x1="820" y1="425" x2="890" y2="515" class="ad" marker-end="url(#a-d)"/>
+
+    <!-- Code Search -> Docs -->
+    <line x1="720" y1="575" x2="720" y2="600" class="ay" marker-end="url(#a-y)"/>
+
+    <!-- Contents -> Source -->
+    <line x1="885" y1="575" x2="885" y2="600" class="ay" marker-end="url(#a-y)"/>
+  </svg>
+
+  <!-- ══════════ INFRA FOOTER ══════════ -->
+  <div style="position:absolute; left:50px; top:745px; display:flex; gap:20px; align-items:center; flex-wrap:wrap;">
+    <div style="display:flex; align-items:center; gap:5px;">
+      <svg width="20" height="20" viewBox="0 0 48 48"><rect x="4" y="4" width="40" height="40" rx="6" fill="#5c2d91"/><text x="24" y="30" text-anchor="middle" fill="#fff" font-size="15" font-weight="bold">H</text></svg>
+      <span style="font-size:10.5px; color:#5c2d91; font-weight:600;">AI Hub</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:5px;">
+      <svg width="20" height="20" viewBox="0 0 48 48"><rect x="4" y="4" width="40" height="40" rx="6" fill="#5c2d91" opacity=".8"/><text x="24" y="30" text-anchor="middle" fill="#fff" font-size="15" font-weight="bold">P</text></svg>
+      <span style="font-size:10.5px; color:#5c2d91; font-weight:600;">AI Project</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:5px;">
+      <svg width="20" height="20" viewBox="0 0 48 48"><rect x="4" y="4" width="40" height="40" rx="6" fill="#e3008c"/><text x="24" y="31" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">AI</text></svg>
+      <span style="font-size:10.5px; color:#e3008c; font-weight:600;">AI Services</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:5px;">
+      <svg width="20" height="20" viewBox="0 0 48 48"><rect x="4" y="4" width="40" height="40" rx="6" fill="#0078d4"/><circle cx="24" cy="24" r="9" stroke="#fff" stroke-width="2.5" fill="none"/></svg>
+      <span style="font-size:10.5px; color:#0078d4; font-weight:600;">AI Search</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:5px;">
+      <svg width="20" height="20" viewBox="0 0 48 48"><ellipse cx="24" cy="14" rx="16" ry="6" fill="#3aa0f7"/><rect x="8" y="14" width="32" height="20" fill="#0078d4"/><ellipse cx="24" cy="34" rx="16" ry="6" fill="#005a9e"/></svg>
+      <span style="font-size:10.5px; color:#0078d4; font-weight:600;">Storage</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:5px;">
+      <svg width="20" height="20" viewBox="0 0 48 48"><rect x="6" y="6" width="36" height="36" rx="5" fill="#5c2d91"/><circle cx="24" cy="20" r="6" stroke="#fff" stroke-width="2" fill="none"/><rect x="22" y="26" width="4" height="9" rx="2" fill="#fff"/></svg>
+      <span style="font-size:10.5px; color:#5c2d91; font-weight:600;">Key Vault</span>
+    </div>
+    <span style="font-size:9.5px; color:#a19f9d; margin-left:12px;">All resources auto-provisioned via Bicep template</span>
+  </div>
+
+</div>
+</body>
+</html>
