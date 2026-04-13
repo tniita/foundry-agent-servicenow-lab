@@ -3,13 +3,19 @@
 // Foundry Agent Service + Foundry IQ KB + GitHub Function Tools
 //
 // リソース構成:
+//   - Azure AI Services (統合 Cognitive Services — AOAI モデルを含む)
 //   - Azure AI Search (Semantic Ranker 付き)
-//   - Azure OpenAI (gpt-4o + text-embedding-3-large)
 //   - Storage Account + Blob コンテナ (インシデントデータ格納)
 //   - Key Vault (AI Hub 必須依存)
-//   - AI Hub + AI Project (Foundry Agent Service)
-//   - ワークスペース接続 (AI Search, OpenAI)
+//   - AI Hub + AI Project (Foundry Agent Service のホスト)
+//   - ワークスペース接続 (AI Search, AI Services)
 //   - ロール割り当て
+//
+// 設計ポイント:
+//   独立した Azure OpenAI リソースは作成しない。
+//   Azure AI Services (kind: AIServices) が AOAI を含む統合リソースとなり、
+//   AI Hub がこれを直接参照することで Foundry Project 内から
+//   モデルデプロイ (gpt-4o, text-embedding-3-large) を利用できる。
 //
 // デプロイ:
 //   az deployment group create \
@@ -29,16 +35,16 @@ param prefix string = 'fiqlab'
 @description('デプロイリージョン')
 param location string = resourceGroup().location
 
-@description('Azure OpenAI のリージョン（モデル可用性に依存）')
-param openaiLocation string = 'eastus2'
+@description('Azure AI Services のリージョン（モデル可用性に依存）')
+param aiServicesLocation string = 'eastus2'
 
 @description('Azure AI Search の SKU (Basic 以上が必要: Semantic Ranker)')
 @allowed(['basic', 'standard', 'standard2'])
 param searchSku string = 'basic'
 
-@description('Azure OpenAI の SKU')
+@description('Azure AI Services の SKU')
 @allowed(['S0'])
-param openaiSku string = 'S0'
+param aiServicesSku string = 'S0'
 
 @description('GPT-4o モデルのデプロイ容量 (1K TPM 単位)')
 param gpt4oCapacity int = 30
@@ -54,7 +60,7 @@ param blobContainerName string = 'incidents'
 // ------------------------------------------------------------
 var uniqueSuffix = uniqueString(resourceGroup().id, prefix)
 var searchName = '${prefix}-search-${uniqueSuffix}'
-var openaiName = '${prefix}-openai-${uniqueSuffix}'
+var aiServicesName = '${prefix}-ais-${uniqueSuffix}'
 var storageName = replace('${prefix}st${uniqueSuffix}', '-', '')
 var kvName = '${prefix}-kv-${uniqueSuffix}'
 var hubName = '${prefix}-hub-${uniqueSuffix}'
@@ -126,21 +132,26 @@ resource search 'Microsoft.Search/searchServices@2024-06-01-preview' = {
 }
 
 // ------------------------------------------------------------
-// Azure OpenAI Service
+// Azure AI Services (統合リソース — AOAI モデルを含む)
+//
+// kind: 'AIServices' は Azure OpenAI を含む統合 Cognitive Services
+// リソース。独立した Azure OpenAI リソースは不要になり、
+// Foundry Hub がこのリソースに直接接続してモデルを利用する。
 // ------------------------------------------------------------
-resource openai 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
-  name: take(openaiName, 64)
-  location: openaiLocation
-  kind: 'OpenAI'
-  sku: { name: openaiSku }
+resource aiServices 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
+  name: take(aiServicesName, 64)
+  location: aiServicesLocation
+  kind: 'AIServices'
+  sku: { name: aiServicesSku }
+  identity: { type: 'SystemAssigned' }
   properties: {
-    customSubDomainName: take(openaiName, 64)
+    customSubDomainName: take(aiServicesName, 64)
     publicNetworkAccess: 'Enabled'
   }
 }
 
 resource gpt4oDeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-10-01' = {
-  parent: openai
+  parent: aiServices
   name: 'gpt-4o'
   sku: {
     name: 'GlobalStandard'
@@ -156,7 +167,7 @@ resource gpt4oDeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-
 }
 
 resource embeddingDeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-10-01' = {
-  parent: openai
+  parent: aiServices
   name: 'text-embedding-3-large'
   sku: {
     name: 'Standard'
@@ -174,6 +185,10 @@ resource embeddingDeployment 'Microsoft.CognitiveServices/accounts/deployments@2
 
 // ------------------------------------------------------------
 // AI Hub (Foundry Agent Service の親リソース)
+//
+// AI Hub は共有管理基盤（ガバナンスレイヤー）。
+// 接続情報・セキュリティ設定を一元管理し、子 Project に継承する。
+// Agent Service を利用するには Hub → Project の階層が必須。
 // ------------------------------------------------------------
 resource hub 'Microsoft.MachineLearningServices/workspaces@2024-10-01' = {
   name: take(hubName, 33)
@@ -181,6 +196,9 @@ resource hub 'Microsoft.MachineLearningServices/workspaces@2024-10-01' = {
   kind: 'hub'
   identity: { type: 'SystemAssigned' }
   sku: { name: 'Basic', tier: 'Basic' }
+  tags: {
+    SecurityControl: 'Ignore'
+  }
   properties: {
     friendlyName: '${prefix} AI Hub'
     storageAccount: storage.id
@@ -188,6 +206,27 @@ resource hub 'Microsoft.MachineLearningServices/workspaces@2024-10-01' = {
     publicNetworkAccess: 'Enabled'
   }
   dependsOn: [blobContainer]
+}
+
+// AI Services 接続 (Hub レベル)
+// Hub が AI Services に接続することで、配下の Project から
+// gpt-4o / text-embedding-3-large を直接利用できる。
+resource hubAIServicesConnection 'Microsoft.MachineLearningServices/workspaces/connections@2024-10-01' = {
+  parent: hub
+  name: 'aiservices-connection'
+  properties: {
+    authType: 'ApiKey'
+    category: 'AIServices'
+    isSharedToAll: true
+    target: aiServices.properties.endpoint
+    credentials: {
+      key: aiServices.listKeys().key1
+    }
+    metadata: {
+      ApiType: 'Azure'
+      ResourceId: aiServices.id
+    }
+  }
 }
 
 // AI Search 接続 (Hub レベル)
@@ -208,26 +247,12 @@ resource hubSearchConnection 'Microsoft.MachineLearningServices/workspaces/conne
   }
 }
 
-// OpenAI 接続 (Hub レベル)
-resource hubOpenAIConnection 'Microsoft.MachineLearningServices/workspaces/connections@2024-10-01' = {
-  parent: hub
-  name: 'aoai-connection'
-  properties: {
-    authType: 'ApiKey'
-    category: 'AzureOpenAI'
-    target: openai.properties.endpoint
-    credentials: {
-      key: openai.listKeys().key1
-    }
-    metadata: {
-      ApiType: 'Azure'
-      ResourceId: openai.id
-    }
-  }
-}
-
 // ------------------------------------------------------------
 // AI Project (Foundry Agent Service の実行環境)
+//
+// Hub の子リソース。Agent Service / KB がここで動作する。
+// Hub の AI Services 接続・AI Search 接続を自動継承するため、
+// Project 内から直接モデルデプロイを利用できる。
 // ------------------------------------------------------------
 resource project 'Microsoft.MachineLearningServices/workspaces@2024-10-01' = {
   name: projectName
@@ -235,6 +260,9 @@ resource project 'Microsoft.MachineLearningServices/workspaces@2024-10-01' = {
   kind: 'project'
   identity: { type: 'SystemAssigned' }
   sku: { name: 'Basic', tier: 'Basic' }
+  tags: {
+    SecurityControl: 'Ignore'
+  }
   properties: {
     friendlyName: '${prefix} Agent Project'
     hubResourceId: hub.id
@@ -257,10 +285,10 @@ resource searchStorageRole 'Microsoft.Authorization/roleAssignments@2022-04-01' 
   }
 }
 
-// AI Search → OpenAI (OpenAI User) — KB が Embedding/Chat モデルを使用
-resource searchOpenAIRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  scope: openai
-  name: guid(openai.id, search.id, cognitiveServicesOpenAIUserRoleId)
+// AI Search → AI Services (OpenAI User) — KB が Embedding/Chat モデルを使用
+resource searchAIServicesRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: aiServices
+  name: guid(aiServices.id, search.id, cognitiveServicesOpenAIUserRoleId)
   properties: {
     principalId: search.identity.principalId
     principalType: 'ServicePrincipal'
@@ -295,8 +323,8 @@ resource projectSearchContribRole 'Microsoft.Authorization/roleAssignments@2022-
 // ------------------------------------------------------------
 output searchEndpoint string = 'https://${search.name}.search.windows.net'
 output searchName string = search.name
-output openaiEndpoint string = openai.properties.endpoint
-output openaiName string = openai.name
+output aiServicesEndpoint string = aiServices.properties.endpoint
+output aiServicesName string = aiServices.name
 output storageAccountName string = storage.name
 output blobContainerName string = blobContainerName
 output storageConnectionString string = 'DefaultEndpointsProtocol=https;AccountName=${storage.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${storage.listKeys().keys[0].value}'

@@ -7,9 +7,9 @@ using 'main.bicep'
 
 param prefix = 'fiqlab'
 param location = 'japaneast'
-param openaiLocation = 'eastus2'    // GPT-4o / Embedding の可用リージョン
-param searchSku = 'basic'           // Semantic Ranker は Basic 以上で利用可
-param openaiSku = 'S0'
-param gpt4oCapacity = 30            // 30K TPM
-param embeddingCapacity = 120       // 120K TPM
+param aiServicesLocation = 'eastus2'  // GPT-4o / Embedding の可用リージョン
+param searchSku = 'basic'             // Semantic Ranker は Basic 以上で利用可
+param aiServicesSku = 'S0'
+param gpt4oCapacity = 30              // 30K TPM
+param embeddingCapacity = 120          // 120K TPM
 param blobContainerName = 'incidents'
