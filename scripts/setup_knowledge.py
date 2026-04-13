@@ -71,11 +71,19 @@ def _validate_env() -> None:
 # ---------------------------------------------------------------------------
 def upload_csv_to_blob(csv_path: str) -> None:
     """モック CSV を Blob コンテナにアップロードする."""
+    from azure.identity import DefaultAzureCredential
     from azure.storage.blob import BlobServiceClient
 
     print(f"📤 CSV アップロード: {os.path.basename(csv_path)} → {BLOB_CONTAINER_NAME}")
 
-    blob_service = BlobServiceClient.from_connection_string(BLOB_CONNECTION_STRING)
+    # キーベース認証が無効な場合は DefaultAzureCredential を使用
+    storage_account_name = os.environ.get("BLOB_STORAGE_ACCOUNT_NAME", "")
+    if storage_account_name:
+        account_url = f"https://{storage_account_name}.blob.core.windows.net"
+        credential = DefaultAzureCredential()
+        blob_service = BlobServiceClient(account_url, credential=credential)
+    else:
+        blob_service = BlobServiceClient.from_connection_string(BLOB_CONNECTION_STRING)
     container_client = blob_service.get_container_client(BLOB_CONTAINER_NAME)
 
     # コンテナが存在しなければ作成
@@ -140,16 +148,16 @@ def create_knowledge_source() -> None:
         name=KNOWLEDGE_SOURCE_NAME,
         description="ServiceNow インシデントデータ（モック CSV）",
         azure_blob_parameters=AzureBlobKnowledgeSourceParameters(
-            connection_string=BLOB_CONNECTION_STRING,
+            connection_string=os.environ.get(
+                "BLOB_RESOURCE_ID_CONNECTION_STRING",
+                BLOB_CONNECTION_STRING,
+            ),
             container_name=BLOB_CONTAINER_NAME,
             is_adls_gen2=False,
             ingestion_parameters=KnowledgeSourceIngestionParameters(
                 disable_image_verbalization=True,
                 embedding_model=KnowledgeSourceAzureOpenAIVectorizer(
                     azure_open_ai_parameters=embedding_params,
-                ),
-                chat_completion_model=KnowledgeBaseAzureOpenAIModel(
-                    azure_open_ai_parameters=chat_params,
                 ),
             ),
         ),

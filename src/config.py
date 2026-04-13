@@ -53,7 +53,7 @@ class ProjectConfig:
 
 @dataclass(frozen=True)
 class GitHubConfig:
-    """GitHub リポジトリの接続設定（Function Tool が使用）."""
+    """GitHub リポジトリの接続設定（MCPTool 接続の認証に使用）."""
     token: str = os.getenv("GITHUB_TOKEN", "")
     owner: str = os.getenv("GITHUB_OWNER", "")
     repo: str = os.getenv("GITHUB_REPO", "")

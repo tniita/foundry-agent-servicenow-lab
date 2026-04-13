@@ -201,10 +201,12 @@ Agent Service から KB に接続するには、プロジェクトに **RemoteTo
 
 ```python
 # setup_agent.py が自動で作成
+# Hub レス構成では CognitiveServices/accounts/projects/connections を使用
 response = requests.put(
     f"https://management.azure.com{project_resource_id}"
-    f"/connections/{connection_name}?api-version=2025-10-01-preview",
+    f"/connections/{connection_name}?api-version=2025-12-01",
     json={
+        "type": "Microsoft.CognitiveServices/accounts/projects/connections",
         "properties": {
             "authType": "ProjectManagedIdentity",
             "category": "RemoteTool",

@@ -20,9 +20,9 @@
 
 | # | テスト質問 | 期待される動作 |
 |---|-----------|---------------|
-| B1 | 「認証モジュールの設計方針を教えてください」 | GitHub Function Tools 経由で設計書から情報を取得 |
-| B2 | 「エラーハンドリングの実装パターンを教えてください」 | GitHub Function Tools 経由でソースコードから実装例を提示 |
-| B3 | 「API のエンドポイント一覧を教えてください」 | Function Tools で設計書やコードから API 情報を横断検索 |
+| B1 | 「認証モジュールの設計方針を教えてください」 | GitHub MCPTool 経由で設計書から情報を取得 |
+| B2 | 「エラーハンドリングの実装パターンを教えてください」 | GitHub MCPTool 経由でソースコードから実装例を提示 |
+| B3 | 「API のエンドポイント一覧を教えてください」 | GitHub MCPTool で設計書やコードから API 情報を横断検索 |
 
 ### カテゴリ C: 複合質問（クロスソース）
 
@@ -105,6 +105,6 @@ for effort in ["minimal", "low", "medium"]:
 お疲れ様でした。このラボで学んだ内容:
 - モック CSV データを Blob Storage に配置し、Blob Knowledge Source で自動インデックスする方法
 - Foundry IQ のナレッジベースとアジェンティック検索の IaC 構築方法
-- GitHub Function Tools による Foundry Agent Service でのリアルタイムコード・設計書検索
+- GitHub MCPTool (Remote MCP) による Foundry Agent Service でのリアルタイムコード・設計書検索
 - Foundry Agent Service (Prompt Agent + Responses API) によるマルチツールエージェント構築
 - Streamlit による対話型チャット UI の実装方法

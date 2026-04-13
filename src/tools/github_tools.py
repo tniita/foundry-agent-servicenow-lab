@@ -1,7 +1,8 @@
-"""GitHub API ツール — Foundry Agent Service の Function Tool として使用.
+"""GitHub API ユーティリティ — 参考コード.
 
-エージェントが GitHub リポジトリのソースコード・設計書を
-リアルタイムで検索・取得するための関数群。
+GitHub リモート MCP サーバーへの移行により、これらの関数は
+直接使用されなくなりました。Agent Service の MCPTool がサーバーサイドで
+GitHub MCP を自動実行します。テストやデバッグ用の参考コードとして残しています。
 """
 
 from __future__ import annotations
@@ -36,7 +37,7 @@ def _get(url: str, params: dict | None = None) -> dict[str, Any]:
 
 
 # ---------------------------------------------------------------------------
-# Function Tool 定義 (OpenAI function schema)
+# ツール定義 (OpenAI function schema) — 参考用
 # ---------------------------------------------------------------------------
 GITHUB_FUNCTION_TOOLS = [
     {

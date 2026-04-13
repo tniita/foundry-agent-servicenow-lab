@@ -1,6 +1,6 @@
 """Streamlit チャットアプリ — Foundry Agent Service 統合.
 
-Foundry IQ KB (MCPTool) と GitHub Function Tools を統合した
+Foundry IQ KB (MCPTool) と GitHub MCPTool (Remote MCP) を統合した
 Prompt Agent を通じて、システム問い合わせに自動応答する。
 
 起動:
@@ -8,6 +8,13 @@ Prompt Agent を通じて、システム問い合わせに自動応答する。
 """
 
 from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+# streamlit run src/app.py で実行した場合、プロジェクトルートが
+# sys.path に含まれないため追加する
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import streamlit as st
 
@@ -42,7 +49,7 @@ with st.sidebar:
     st.caption(
         f"Foundry Agent Service (`{project_cfg.agent_name}`) が\n"
         "ユーザーの質問を分析し、Foundry IQ KB (MCP) または\n"
-        "GitHub Function Tools を自動選択して回答を生成します。"
+        "GitHub MCPTool を自動選択して回答を生成します。"
     )
 
     st.divider()

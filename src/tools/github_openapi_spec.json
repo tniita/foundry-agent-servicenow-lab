@@ -1,0 +1,234 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "GitHub Repository API",
+    "version": "1.0.0",
+    "description": "GitHub REST API — リポジトリのコード検索、ファイル取得、ファイル一覧取得"
+  },
+  "servers": [
+    {
+      "url": "https://api.github.com"
+    }
+  ],
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ],
+  "paths": {
+    "/search/code": {
+      "get": {
+        "operationId": "search_code",
+        "summary": "GitHub リポジトリ内のコードをキーワード検索する",
+        "description": "GitHub Code Search API を使い、ソースコード内の関数名・クラス名・エラーメッセージ等を検索する。クエリには repo:owner/repo や language:python などの修飾子を付与できる。",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "検索クエリ。例: 'authentication repo:tniita/foundry-agent-handson-lab language:python'"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            },
+            "description": "1ページあたりの結果件数 (最大100)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "検索結果",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total_count": {
+                      "type": "integer"
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string" },
+                          "path": { "type": "string" },
+                          "repository": {
+                            "type": "object",
+                            "properties": {
+                              "full_name": { "type": "string" }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/repos/{owner}/{repo}/contents/{path}": {
+      "get": {
+        "operationId": "get_file_content",
+        "summary": "GitHub リポジトリ内のファイル内容を取得する",
+        "description": "GitHub Contents API でファイルの内容を取得する。レスポンスの content フィールドは Base64 エンコードされている。設計書(.md)やソースコード(.py)の詳細確認に使用する。",
+        "parameters": [
+          {
+            "name": "owner",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "リポジトリオーナー"
+          },
+          {
+            "name": "repo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "リポジトリ名"
+          },
+          {
+            "name": "path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ファイルパス（例: src/main.py, docs/design.md）"
+          },
+          {
+            "name": "ref",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "main"
+            },
+            "description": "Git ブランチ名またはコミット SHA"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ファイル内容（content は Base64 エンコード）",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "path": { "type": "string" },
+                    "size": { "type": "integer" },
+                    "encoding": { "type": "string" },
+                    "content": {
+                      "type": "string",
+                      "description": "Base64 エンコードされたファイル内容"
+                    },
+                    "download_url": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/repos/{owner}/{repo}/git/trees/{sha}": {
+      "get": {
+        "operationId": "list_repository_files",
+        "summary": "GitHub リポジトリのファイル一覧を取得する",
+        "description": "GitHub Git Trees API でリポジトリの全ファイル一覧を取得する。recursive=1 でサブディレクトリも含む再帰的な一覧を取得できる。",
+        "parameters": [
+          {
+            "name": "owner",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "リポジトリオーナー"
+          },
+          {
+            "name": "repo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "リポジトリ名"
+          },
+          {
+            "name": "sha",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ブランチ名またはツリーの SHA（例: main）"
+          },
+          {
+            "name": "recursive",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "1"
+            },
+            "description": "再帰的に一覧取得する場合は '1'"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ファイルツリー",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "sha": { "type": "string" },
+                    "tree": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "path": { "type": "string" },
+                          "type": {
+                            "type": "string",
+                            "description": "blob=ファイル, tree=ディレクトリ"
+                          },
+                          "size": { "type": "integer" }
+                        }
+                      }
+                    },
+                    "truncated": { "type": "boolean" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
