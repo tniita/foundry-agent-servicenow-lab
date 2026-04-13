@@ -6,7 +6,7 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     width: 1400px;
-    height: 940px;
+    height: 980px;
     background: #ffffff;
     font-family: 'Segoe UI', 'Yu Gothic', 'Meiryo', sans-serif;
     color: #1a1a1a;
@@ -16,7 +16,7 @@
   .title-bar h1 { font-size: 21px; font-weight: 700; color: #0078d4; }
   .subtitle { font-size: 12.5px; color: #605e5c; margin-bottom: 24px; padding-left: 50px; }
 
-  .diagram { position: relative; width: 1320px; height: 830px; }
+  .diagram { position: relative; width: 1320px; height: 870px; }
 
   /* ── Node ── */
   .node {
@@ -71,16 +71,16 @@
 <div class="diagram">
 
   <!-- ══════════ GROUPS ══════════ -->
-  <div class="grp azure" style="left:310px; top:80px; width:700px; height:210px;">
+  <div class="grp azure" style="left:310px; top:95px; width:700px; height:215px;">
     <span class="gl">Azure AI Foundry</span>
   </div>
-  <div class="grp kb" style="left:30px; top:330px; width:560px; height:370px;">
+  <div class="grp kb" style="left:30px; top:330px; width:560px; height:420px;">
     <span class="gl">Foundry IQ -- Knowledge Retrieval Pipeline</span>
   </div>
-  <div class="grp gh" style="left:640px; top:330px; width:370px; height:340px;">
+  <div class="grp gh" style="left:640px; top:330px; width:380px; height:360px;">
     <span class="gl">GitHub -- Code / Design Doc Search</span>
   </div>
-  <div class="grp infra" style="left:30px; top:730px; width:980px; height:85px;">
+  <div class="grp infra" style="left:30px; top:770px; width:980px; height:85px;">
     <span class="gl">Azure Infrastructure (Bicep IaC)</span>
   </div>
 
@@ -88,47 +88,46 @@
   <div class="node" style="left:590px; top:0px;">
     <svg class="ico" viewBox="0 0 52 52"><circle cx="26" cy="17" r="10" fill="#0078d4"/><path d="M6 48c0-12 9-18 20-18s20 6 20 18" fill="#0078d4" opacity=".55"/></svg>
     <div class="lbl">User</div>
-    <div class="sub">Streamlit Chat UI</div>
   </div>
 
   <!-- ══════════ ROW 1: FOUNDRY (inside azure group) ══════════ -->
   <!-- AI Hub -->
-  <div class="node" style="left:345px; top:98px;">
+  <div class="node" style="left:345px; top:113px;">
     <svg class="ico" viewBox="0 0 52 52"><rect x="4" y="4" width="44" height="44" rx="8" fill="#5c2d91"/><circle cx="26" cy="21" r="7" fill="#fff"/><circle cx="15" cy="35" r="4.5" fill="#fff" opacity=".7"/><circle cx="37" cy="35" r="4.5" fill="#fff" opacity=".7"/><line x1="26" y1="28" x2="15" y2="31" stroke="#fff" stroke-width="1.6"/><line x1="26" y1="28" x2="37" y2="31" stroke="#fff" stroke-width="1.6"/></svg>
     <div class="lbl">AI Hub</div>
     <div class="sub">Governance</div>
   </div>
 
   <!-- AI Project -->
-  <div class="node" style="left:470px; top:98px;">
+  <div class="node" style="left:470px; top:113px;">
     <svg class="ico" viewBox="0 0 52 52"><rect x="4" y="4" width="44" height="44" rx="8" fill="#5c2d91" opacity=".82"/><rect x="12" y="14" width="28" height="5" rx="2" fill="#fff"/><rect x="12" y="23" width="21" height="5" rx="2" fill="#fff" opacity=".8"/><rect x="12" y="32" width="24" height="5" rx="2" fill="#fff" opacity=".6"/></svg>
     <div class="lbl">AI Project</div>
     <div class="sub">Agent Runtime</div>
   </div>
 
   <!-- Agent Service -->
-  <div class="node" style="left:610px; top:98px;">
+  <div class="node" style="left:610px; top:113px;">
     <svg class="ico" viewBox="0 0 52 52"><rect x="3" y="7" width="46" height="36" rx="6" fill="#0078d4"/><circle cx="19" cy="23" r="6" fill="#fff"/><rect x="28" y="18" width="14" height="2.5" rx="1" fill="#fff"/><rect x="28" y="24" width="10" height="2.5" rx="1" fill="#fff"/><path d="M14 35h24" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>
     <div class="lbl">Foundry Agent Service</div>
     <div class="sub">Prompt Agent / Responses API</div>
   </div>
 
   <!-- Key Vault -->
-  <div class="node" style="left:870px; top:98px;">
+  <div class="node" style="left:870px; top:113px;">
     <svg class="ico" viewBox="0 0 52 52"><rect x="6" y="6" width="40" height="40" rx="6" fill="#5c2d91"/><circle cx="26" cy="21" r="7" stroke="#fff" stroke-width="2.2" fill="none"/><rect x="23.5" y="28" width="5" height="12" rx="2.5" fill="#fff"/></svg>
     <div class="lbl">Key Vault</div>
     <div class="sub">Secrets</div>
   </div>
 
   <!-- MCPTool -->
-  <div class="node" style="left:460px; top:200px;">
+  <div class="node" style="left:460px; top:215px;">
     <svg class="ico" viewBox="0 0 52 52"><rect x="6" y="6" width="40" height="40" rx="6" fill="#107c10"/><path d="M18 26h16M26 18v16" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/></svg>
     <div class="lbl">MCPTool</div>
     <div class="sub">knowledge_base_retrieve</div>
   </div>
 
   <!-- Function Tools -->
-  <div class="node" style="left:760px; top:200px;">
+  <div class="node" style="left:760px; top:215px;">
     <svg class="ico" viewBox="0 0 52 52"><rect x="6" y="6" width="40" height="40" rx="6" fill="#24292f"/><text x="26" y="33" text-anchor="middle" fill="#fff" font-size="20" font-weight="bold">{ }</text></svg>
     <div class="lbl">Function Tools</div>
     <div class="sub">Client-side Execution</div>
@@ -165,14 +164,14 @@
   </div>
 
   <!-- Blob Storage -->
-  <div class="node" style="left:440px; top:530px;">
+  <div class="node" style="left:440px; top:545px;">
     <svg class="ico" viewBox="0 0 52 52"><ellipse cx="26" cy="13" rx="18" ry="7" fill="#3aa0f7"/><rect x="8" y="13" width="36" height="26" fill="#0078d4"/><ellipse cx="26" cy="39" rx="18" ry="7" fill="#005a9e"/><ellipse cx="26" cy="13" rx="18" ry="7" fill="#3aa0f7"/></svg>
     <div class="lbl">Blob Storage</div>
     <div class="sub">incidents container</div>
   </div>
 
   <!-- Mock CSV -->
-  <div class="node" style="left:443px; top:630px;">
+  <div class="node" style="left:443px; top:650px;">
     <svg class="ico" viewBox="0 0 52 52"><path d="M12 2h20l12 12v34H12z" fill="#d83b01"/><path d="M32 2v12h12" fill="#a52a00"/><rect x="16" y="22" width="18" height="2.5" rx="1" fill="#fff"/><rect x="16" y="28" width="13" height="2.5" rx="1" fill="#fff" opacity=".8"/><rect x="16" y="34" width="16" height="2.5" rx="1" fill="#fff" opacity=".6"/></svg>
     <div class="lbl">mock_incidents.csv</div>
     <div class="sub">ServiceNow Mock (25 records)</div>
@@ -212,7 +211,13 @@
   </div>
 
   <!-- ══════════ ARROWS ══════════ -->
-  <svg class="arrows" viewBox="0 0 1320 830">
+  <!--
+    Arrow endpoint calculation:
+    Each node icon is 52x52. Center = (left+26, top+26).
+    Icon top edge = top, bottom edge = top+52, left edge = left, right edge = left+52.
+    Arrows connect to icon edges, not text.
+  -->
+  <svg class="arrows" viewBox="0 0 1320 870">
     <defs>
       <marker id="a-b" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7" fill="#0078d4"/></marker>
       <marker id="a-g" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7" fill="#107c10"/></marker>
@@ -222,63 +227,78 @@
       <marker id="a-b2" markerWidth="9" markerHeight="7" refX="0" refY="3.5" orient="auto"><path d="M9,0 L0,3.5 L9,7" fill="#0078d4"/></marker>
     </defs>
 
-    <!-- User -> Agent Service (bidirectional) -->
-    <path d="M616 68 Q616 82 640 100" class="ab" marker-end="url(#a-b)"/>
-    <path d="M636 97 Q612 80 612 66" class="ab" stroke-dasharray="5,3" marker-end="url(#a-b2)"/>
-    <text x="645" y="82" fill="#0078d4" font-size="9.5">Query / Response</text>
+    <!-- User <-> Agent Service (bidirectional) -->
+    <!-- User: cx=616, icon-bottom=52; Agent: cx=636, icon-top=113 -->
+    <line x1="610" y1="54" x2="630" y2="111" class="ab" marker-end="url(#a-b)"/>
+    <line x1="642" y1="111" x2="622" y2="54" class="ab" stroke-dasharray="5,3" marker-end="url(#a-b2)"/>
+    <text x="654" y="84" fill="#0078d4" font-size="9">Streamlit Chat UI</text>
 
     <!-- Agent -> MCPTool -->
-    <line x1="620" y1="165" x2="520" y2="210" class="ag" marker-end="url(#a-g)"/>
+    <!-- Agent: cx=636, icon-bottom=165; MCPTool: cx=486, icon-top=215 -->
+    <line x1="630" y1="167" x2="492" y2="213" class="ag" marker-end="url(#a-g)"/>
 
     <!-- Agent -> Function Tools -->
-    <line x1="670" y1="165" x2="790" y2="210" class="ad" marker-end="url(#a-d)"/>
+    <!-- Agent: cx=636, icon-bottom=165; Function: cx=786, icon-top=215 -->
+    <line x1="648" y1="167" x2="780" y2="213" class="ad" marker-end="url(#a-d)"/>
 
-    <!-- MCPTool -> Foundry IQ KB -->
-    <path d="M480 268 C380 305 200 330 125 365" class="ag" marker-end="url(#a-g)"/>
-    <text x="270" y="305" fill="#107c10" font-weight="600">retrieve</text>
+    <!-- MCPTool -> Foundry IQ KB (curved) -->
+    <!-- MCPTool: cx=486, icon-bottom=267; IQ: cx=96, icon-top=360 -->
+    <path d="M486 269 C420 305 200 340 98 358" class="ag" marker-end="url(#a-g)"/>
+    <text x="320" y="290" fill="#107c10" font-weight="600">retrieve</text>
 
-    <!-- KB -> Blob KS -->
-    <line x1="155" y1="418" x2="300" y2="380" class="ag" stroke-dasharray="5,3" marker-end="url(#a-g)"/>
+    <!-- Foundry IQ -> Blob KS (horizontal) -->
+    <!-- IQ: icon-right=122, cy=386; BlobKS: icon-left=290, cy=386 -->
+    <line x1="124" y1="386" x2="288" y2="386" class="ag" stroke-dasharray="5,3" marker-end="url(#a-g)"/>
 
-    <!-- Blob KS -> AI Search -->
-    <path d="M300 425 C250 460 170 490 128 528" class="ab" marker-end="url(#a-b)"/>
-    <text x="185" y="472" fill="#0078d4">Index</text>
+    <!-- Blob KS -> AI Search (curved) -->
+    <!-- BlobKS bottom: y=412; start below label text ~y=448; AISearch: icon-top=(96,520) -->
+    <path d="M295 448 C258 475 155 500 98 518" class="ab" marker-end="url(#a-b)"/>
+    <text x="185" y="478" fill="#0078d4">Index</text>
 
     <!-- Blob KS -> AI Services -->
-    <line x1="320" y1="425" x2="300" y2="525" class="ar" marker-end="url(#a-r)"/>
-    <text x="322" y="478" fill="#e3008c">Embedding</text>
+    <!-- BlobKS bottom ~y=448; AIServices: icon-top=(281,520) -->
+    <line x1="316" y1="448" x2="283" y2="518" class="ar" marker-end="url(#a-r)"/>
+    <text x="335" y="490" fill="#e3008c">Embedding</text>
 
     <!-- Blob KS -> Blob Storage -->
-    <line x1="360" y1="425" x2="468" y2="535" class="ab" marker-end="url(#a-b)"/>
-    <text x="408" y="475" fill="#0078d4">Data</text>
+    <!-- BlobKS bottom ~y=448; Blob: icon-top=(466,545) -->
+    <line x1="340" y1="448" x2="464" y2="543" class="ab" marker-end="url(#a-b)"/>
+    <text x="420" y="482" fill="#0078d4">Data</text>
 
-    <!-- CSV -> Blob Storage -->
-    <line x1="470" y1="633" x2="470" y2="600" class="ay" marker-end="url(#a-y)"/>
-    <text x="482" y="620" font-size="9">upload</text>
+    <!-- CSV -> Blob Storage (upward) -->
+    <!-- CSV: icon-top-center=(469,650); Blob: icon-bottom-center=(466,597) -->
+    <line x1="469" y1="648" x2="466" y2="599" class="ay" marker-end="url(#a-y)"/>
+    <text x="478" y="628" font-size="9">upload</text>
 
-    <!-- AI Search <-> AI Services (role) -->
-    <line x1="160" y1="555" x2="265" y2="555" stroke-dasharray="4,3" class="ay" marker-end="url(#a-y)"/>
-    <text x="175" y="570" font-size="8.5" fill="#605e5c">OpenAI User Role</text>
+    <!-- AI Search <-> AI Services (horizontal, dashed) -->
+    <!-- AISearch: icon-right=122, cy=546; AIServices: icon-left=255, cy=546 -->
+    <line x1="124" y1="546" x2="253" y2="546" stroke-dasharray="4,3" class="ay" marker-end="url(#a-y)"/>
+    <text x="148" y="538" font-size="8.5" fill="#605e5c">OpenAI User Role</text>
 
     <!-- Function Tools -> GitHub Repo -->
-    <line x1="800" y1="268" x2="800" y2="365" class="ad" marker-end="url(#a-d)"/>
-    <text x="808" y="322" fill="#57606a">API call</text>
+    <!-- Function: cx=786, icon-bottom=267; GitHub: cx=796, icon-top=360 -->
+    <line x1="788" y1="269" x2="794" y2="358" class="ad" marker-end="url(#a-d)"/>
+    <text x="800" y="318" fill="#57606a">API call</text>
 
     <!-- GitHub -> Code Search -->
-    <line x1="780" y1="425" x2="728" y2="515" class="ad" marker-end="url(#a-d)"/>
+    <!-- GitHub: icon-bottom=(796,412); CodeSearch: icon-top=(716,510) -->
+    <line x1="782" y1="414" x2="720" y2="508" class="ad" marker-end="url(#a-d)"/>
 
-    <!-- GitHub -> Contents -->
-    <line x1="820" y1="425" x2="890" y2="515" class="ad" marker-end="url(#a-d)"/>
+    <!-- GitHub -> Contents API -->
+    <!-- GitHub: icon-bottom=(796,412); Contents: icon-top=(881,510) -->
+    <line x1="810" y1="414" x2="878" y2="508" class="ad" marker-end="url(#a-d)"/>
 
-    <!-- Code Search -> Docs -->
-    <line x1="720" y1="575" x2="720" y2="600" class="ay" marker-end="url(#a-y)"/>
+    <!-- Code Search -> Design Docs -->
+    <!-- CodeSearch: icon-bottom=(716,562); Docs: icon-top=(714,598) -->
+    <line x1="716" y1="564" x2="714" y2="596" class="ay" marker-end="url(#a-y)"/>
 
-    <!-- Contents -> Source -->
-    <line x1="885" y1="575" x2="885" y2="600" class="ay" marker-end="url(#a-y)"/>
+    <!-- Contents -> Source Code -->
+    <!-- Contents: icon-bottom=(881,562); Source: icon-top=(879,598) -->
+    <line x1="881" y1="564" x2="879" y2="596" class="ay" marker-end="url(#a-y)"/>
   </svg>
 
   <!-- ══════════ INFRA FOOTER ══════════ -->
-  <div style="position:absolute; left:50px; top:745px; display:flex; gap:20px; align-items:center; flex-wrap:wrap;">
+  <div style="position:absolute; left:50px; top:785px; display:flex; gap:20px; align-items:center; flex-wrap:wrap;">
     <div style="display:flex; align-items:center; gap:5px;">
       <svg width="20" height="20" viewBox="0 0 48 48"><rect x="4" y="4" width="40" height="40" rx="6" fill="#5c2d91"/><text x="24" y="30" text-anchor="middle" fill="#fff" font-size="15" font-weight="bold">H</text></svg>
       <span style="font-size:10.5px; color:#5c2d91; font-weight:600;">AI Hub</span>
