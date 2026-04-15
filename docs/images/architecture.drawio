@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="azure-arch" name="Azure Architecture">
-        <mxGraphModel dx="1989" dy="851" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="120" pageHeight="200" math="0" shadow="0">
+        <mxGraphModel dx="1989" dy="427" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="100" pageHeight="200" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -8,10 +8,10 @@
                     <mxGeometry x="20" y="10" width="700" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="rg" value="Resource Group (Japan East)" style="swimlane;startSize=38;fillColor=#F0F6FF;strokeColor=#0078D4;strokeWidth=2;dashed=1;fontStyle=1;fontSize=13;fontColor=#0078D4;html=1;swimlaneLine=0;rounded=1;arcSize=3;" parent="1" vertex="1">
-                    <mxGeometry x="20" y="60" width="1200" height="650" as="geometry"/>
+                    <mxGeometry x="20" y="60" width="1070" height="650" as="geometry"/>
                 </mxCell>
                 <mxCell id="rg-icon" value="" style="shape=image;aspect=fixed;imageAspect=0;image=img/lib/azure2/general/Resource_Groups.svg;html=1;" parent="rg" vertex="1">
-                    <mxGeometry x="1150" y="8" width="24" height="24" as="geometry"/>
+                    <mxGeometry x="1030" y="8" width="24" height="24" as="geometry"/>
                 </mxCell>
                 <mxCell id="ais" value="Azure AI Services (East US 2)" style="swimlane;startSize=38;fillColor=#EDE7F6;strokeColor=#5C2D91;strokeWidth=2;fontStyle=1;fontSize=12;fontColor=#4A148C;html=1;rounded=1;arcSize=4;" parent="rg" vertex="1">
                     <mxGeometry x="30" y="55" width="560" height="575" as="geometry"/>
@@ -25,7 +25,7 @@
                 <mxCell id="proj" value="Foundry Project" style="swimlane;startSize=28;fillColor=#F3E5F5;strokeColor=#8E24AA;strokeWidth=1.5;dashed=1;fontStyle=1;fontSize=11;fontColor=#6A1B9A;html=1;rounded=1;arcSize=5;" parent="ais" vertex="1">
                     <mxGeometry x="20" y="180" width="520" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="conn" value="&lt;b&gt;AI Search Connection&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;category: CognitiveSearch&lt;br&gt;authType: ApiKey&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#8E24AA;strokeWidth=1.5;fontColor=#4A148C;fontSize=10;dashed=1;arcSize=12;" parent="proj" vertex="1">
+                <mxCell id="conn" value="&lt;b&gt;AI Search Connection&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#8E24AA;strokeWidth=1.5;fontColor=#4A148C;fontSize=10;dashed=1;arcSize=12;" parent="proj" vertex="1">
                     <mxGeometry x="260" y="35" width="240" height="65" as="geometry"/>
                 </mxCell>
                 <mxCell id="agent" value="Foundry Agent Service" style="swimlane;startSize=28;fillColor=#E3F2FD;strokeColor=#1565C0;strokeWidth=2;fontStyle=1;fontSize=11;fontColor=#0D47A1;html=1;rounded=1;arcSize=5;" parent="ais" vertex="1">
