@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net">
+  <diagram id="azure-arch" name="Azure Architecture">
+    <mxGraphModel dx="2551" dy="989" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1500" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=18;fontColor=#0078D4;spacingLeft=8;" value="&lt;b&gt;Foundry Agent Service × Foundry IQ — Azure アーキテクチャ構成図&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="700" x="20" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="rg" parent="1" style="swimlane;startSize=38;fillColor=#F0F6FF;strokeColor=#0078D4;strokeWidth=2;dashed=1;fontStyle=1;fontSize=13;fontColor=#0078D4;html=1;swimlaneLine=0;rounded=1;arcSize=3;" value="Resource Group (Japan East)" vertex="1">
+          <mxGeometry height="780" width="1200" x="20" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rg-icon" parent="rg" style="shape=image;aspect=fixed;imageAspect=0;image=img/lib/azure2/general/Resource_Groups.svg;html=1;" value="" vertex="1">
+          <mxGeometry height="24" width="24" x="1150" y="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ais" parent="rg" style="swimlane;startSize=38;fillColor=#EDE7F6;strokeColor=#5C2D91;strokeWidth=2;fontStyle=1;fontSize=12;fontColor=#4A148C;html=1;rounded=1;arcSize=4;" value="Azure AI Services (East US 2)" vertex="1">
+          <mxGeometry height="565" width="584" x="30" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="ais-detail" parent="ais" style="text;html=1;align=left;verticalAlign=top;fontColor=#7B1FA2;spacingLeft=4;" value="&lt;font style=&quot;font-size:9px;&quot;&gt;kind: AIServices / SKU: S0&lt;br&gt;SystemAssigned Identity&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="220" x="15" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="gpt4o" parent="ais" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7E57C2;strokeColor=#5C2D91;fontColor=#FFFFFF;fontSize=11;arcSize=10;" value="&lt;b&gt;gpt-4o&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;GlobalStandard / 30K TPM&lt;br&gt;v2024-11-20&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="200" x="30" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="emb" parent="ais" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7E57C2;strokeColor=#5C2D91;fontColor=#FFFFFF;fontSize=11;arcSize=10;" value="&lt;b&gt;text-embedding-3-large&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;Standard / 120K TPM&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="230" x="270" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="proj" parent="ais" style="swimlane;startSize=28;fillColor=#F3E5F5;strokeColor=#8E24AA;strokeWidth=1.5;dashed=1;fontStyle=1;fontSize=11;fontColor=#6A1B9A;html=1;rounded=1;arcSize=5;" value="Foundry Project" vertex="1">
+          <mxGeometry height="168" width="564" x="20" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="conn" parent="proj" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#8E24AA;strokeWidth=1.5;fontColor=#4A148C;fontSize=10;dashed=1;arcSize=12;" value="&lt;b&gt;AI Search Connection&lt;/b&gt;" vertex="1">
+          <mxGeometry height="65" width="240" x="260" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="agent" parent="ais" style="swimlane;startSize=28;fillColor=#E3F2FD;strokeColor=#1565C0;strokeWidth=2;fontStyle=1;fontSize=11;fontColor=#0D47A1;html=1;rounded=1;arcSize=5;" value="Foundry Agent Service" vertex="1">
+          <mxGeometry height="200" width="520" x="20" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="agent-svc" parent="agent" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1565C0;strokeColor=#0D47A1;fontColor=#FFFFFF;fontSize=11;arcSize=10;" value="&lt;b&gt;Prompt Agent&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;Responses API&lt;/font&gt;" vertex="1">
+          <mxGeometry height="65" width="140" x="20" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="kb-mcp" parent="agent" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E7D32;strokeColor=#1B5E20;fontColor=#FFFFFF;fontSize=11;arcSize=10;" value="&lt;b&gt;MCPTool&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;knowledge_base_retrieve&lt;/font&gt;" vertex="1">
+          <mxGeometry height="65" width="170" x="185" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="gh-mcp" parent="agent" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474F;strokeColor=#263238;fontColor=#FFFFFF;fontSize=11;arcSize=10;" value="&lt;b&gt;MCPTool&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;GitHub Remote MCP&lt;/font&gt;" vertex="1">
+          <mxGeometry height="65" width="125" x="380" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="agent-desc" parent="agent" style="text;html=1;align=left;verticalAlign=top;spacingLeft=4;" value="&lt;font style=&quot;font-size:9px;color:#0D47A1;&quot;&gt;Agent は GPT-4o モデルを使用し、&lt;br&gt;2つの MCPTool で KB検索と&lt;br&gt;GitHub操作を実行&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="480" x="20" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="e-agent-gpt" edge="1" parent="ais" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;rounded=1;html=1;strokeColor=#5C2D91;strokeWidth=1.5;fontColor=#5C2D91;fontSize=9;dashed=1;" target="gpt4o" value="モデル呼び出し">
+          <mxGeometry relative="1" x="0.0838" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points" />
+            <mxPoint x="120" y="385" as="sourcePoint" />
+            <mxPoint x="118" y="155" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tt9eFU38G4mvB6s5I87E-1" parent="ais" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/ai_machine_learning/AI_Studio.svg;" value="" vertex="1">
+          <mxGeometry height="30" width="28.24" x="540" y="4" as="geometry" />
+        </mxCell>
+        <mxCell id="search-bg" parent="rg" style="swimlane;startSize=32;fillColor=#E1F5FE;strokeColor=#0277BD;strokeWidth=2;fontStyle=1;fontSize=12;fontColor=#01579B;html=1;rounded=1;arcSize=5;" value="Azure AI Search" vertex="1">
+          <mxGeometry height="200" width="300" x="680" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="search-icon" parent="search-bg" style="shape=image;aspect=fixed;imageAspect=0;image=img/lib/azure2/databases/Azure_Cognitive_Search.svg;html=1;" value="" vertex="1">
+          <mxGeometry height="26" width="26" x="255" y="4" as="geometry" />
+        </mxCell>
+        <mxCell id="search-detail" parent="search-bg" style="text;html=1;align=left;verticalAlign=top;fontColor=#01579B;spacingLeft=4;" value="&lt;font style=&quot;font-size:9px;&quot;&gt;SKU: Basic&lt;br&gt;Semantic Ranker: 有効&lt;br&gt;SystemAssigned Identity&lt;br&gt;AAD + ApiKey 認証&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="180" x="15" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="search-index" parent="search-bg" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#42A5F5;strokeColor=#1E88E5;fontColor=#FFFFFF;fontSize=10;arcSize=10;" value="&lt;b&gt;Search Index&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;(KB 自動生成)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="55" width="220" x="40" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="tt9eFU38G4mvB6s5I87E-2" parent="search-bg" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/app_services/Search_Services.svg;" value="" vertex="1">
+          <mxGeometry height="25" width="34.61" x="256" y="3" as="geometry" />
+        </mxCell>
+        <mxCell id="storage-bg" parent="rg" style="swimlane;startSize=32;fillColor=#E1F5FE;strokeColor=#0277BD;strokeWidth=2;fontStyle=1;fontSize=12;fontColor=#01579B;html=1;rounded=1;arcSize=5;" value="Storage Account" vertex="1">
+          <mxGeometry height="210" width="300" x="680" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="storage-icon" parent="storage-bg" style="shape=image;aspect=fixed;imageAspect=0;image=img/lib/azure2/storage/Storage_Accounts.svg;html=1;" value="" vertex="1">
+          <mxGeometry height="26" width="26" x="255" y="4" as="geometry" />
+        </mxCell>
+        <mxCell id="storage-detail" parent="storage-bg" style="text;html=1;align=left;verticalAlign=top;fontColor=#01579B;spacingLeft=4;" value="&lt;font style=&quot;font-size:9px;&quot;&gt;Standard_LRS / StorageV2&lt;br&gt;TLS 1.2 / HTTPS Only&lt;br&gt;Public Blob Access: 無効&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="200" x="15" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="blob" parent="storage-bg" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#42A5F5;strokeColor=#1E88E5;fontColor=#FFFFFF;fontSize=11;arcSize=12;" value="&lt;b&gt;incidents&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;Blob Container&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="220" x="40" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="csv-label" parent="storage-bg" style="text;html=1;align=center;verticalAlign=middle;fontColor=#01579B;" value="&lt;font style=&quot;font-size:9px;&quot;&gt;モック CSV (インシデントデータ)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="25" width="190" x="55" y="165" as="geometry" />
+        </mxCell>
+        <mxCell id="kb-bg" parent="rg" style="swimlane;startSize=28;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=2;fontStyle=1;fontSize=12;fontColor=#1B5E20;html=1;rounded=1;arcSize=5;" value="Foundry IQ Knowledge Base" vertex="1">
+          <mxGeometry height="130" width="300" x="680" y="575" as="geometry" />
+        </mxCell>
+        <mxCell id="kb-source" parent="kb-bg" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#66BB6A;strokeColor=#388E3C;fontColor=#FFFFFF;fontSize=10;arcSize=10;" value="&lt;b&gt;Blob Knowledge Source&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;自動インデックス&lt;/font&gt;" vertex="1">
+          <mxGeometry height="55" width="220" x="40" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="KrR5AumScfMiJInazH8M-2" parent="kb-bg" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://learn.microsoft.com/en-us/azure/reusable-content/ce-skilling/azure/media/ai-services/foundry-iq.png;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="260" as="geometry" />
+        </mxCell>
+        <mxCell id="user" parent="rg" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=img/lib/azure2/identity/Users.svg;html=1;fontSize=12;fontColor=#01579B;" value="&lt;b&gt;User&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;Streamlit Chat UI&lt;/font&gt;" vertex="1">
+          <mxGeometry height="48" width="48" x="130" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="e-search-storage" edge="1" parent="rg" source="search-bg" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;rounded=1;html=1;strokeColor=#0277BD;strokeWidth=1.5;fontColor=#0277BD;fontSize=9;exitX=0.3;exitY=1;exitDx=0;exitDy=0;entryX=0.3;entryY=0;entryDx=0;entryDy=0;" target="storage-bg" value="Blob参照">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-kb-search" edge="1" parent="rg" source="kb-bg" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#2E7D32;strokeWidth=1.5;fontColor=#2E7D32;fontSize=9;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" value="インデックス参照">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1020" y="640" />
+              <mxPoint x="1020" y="170" />
+            </Array>
+            <mxPoint x="980" y="170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="github" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#24292E;strokeColor=#333333;strokeWidth=2;fontColor=#FFFFFF;fontSize=12;arcSize=8;" value="&lt;b&gt;GitHub&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;Remote MCP Server&lt;/font&gt;" vertex="1">
+          <mxGeometry height="55" width="180" x="1280" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="e-user-agent" edge="1" parent="1" source="user" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#0078D4;strokeWidth=2;fontColor=#0078D4;fontSize=9;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.2;entryY=1;entryDx=0;entryDy=0;" target="agent" value="質問 / 回答">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-conn-search" edge="1" parent="1" source="conn" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#8E24AA;strokeWidth=2;fontColor=#8E24AA;fontSize=9;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="search-bg" value="接続">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="660" y="362" />
+              <mxPoint x="660" y="215" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-search-emb" edge="1" parent="1" source="search-bg" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#5C2D91;strokeWidth=1.5;fontColor=#5C2D91;fontSize=9;exitX=0;exitY=0.25;exitDx=0;exitDy=0;" target="emb" value="Embedding">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="650" y="165" />
+              <mxPoint x="650" y="175" />
+              <mxPoint x="435" y="175" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-agent-kb" edge="1" parent="1" source="kb-mcp" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#2E7D32;strokeWidth=2;fontColor=#2E7D32;fontSize=9;exitX=0.558;exitY=-0.028;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitPerimeter=0;" target="kb-bg" value="MCP retrieve">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="350" y="498" />
+              <mxPoint x="670" y="498" />
+              <mxPoint x="670" y="700" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tt9eFU38G4mvB6s5I87E-3" parent="1" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;strokeColor=none;fillColor=#00BEF2;shape=mxgraph.azure.github_code;pointerEvents=1;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="1290" y="767.5" as="geometry" />
+        </mxCell>
+        <mxCell id="tt9eFU38G4mvB6s5I87E-7" edge="1" parent="1" source="gh-mcp" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#2D7600;strokeWidth=2;fontColor=#2E7D32;fontSize=9;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fillColor=#60a917;" target="github" value="MCP retrieve">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="513" y="788" />
+            </Array>
+            <mxPoint x="520" y="605" as="sourcePoint" />
+            <mxPoint x="870" y="802" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
